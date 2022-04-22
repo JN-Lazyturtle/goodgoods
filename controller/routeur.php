@@ -1,10 +1,16 @@
 <?php
 
-require_once "../librairie/File.php";
-require(File::build_path(array('controller', "ControllerProduit.php")));
+//require_once "../librairie/File.php";
+require_once File::build_path(array('controller', "ControllerProduit.php"));
 
 // On recupère l'action passée dans l'URL
-$action = $_GET['action'];
+if(empty($_GET)){
+    ControllerProduit::readAll();
+} else {
+    $action = $_GET['action'];
+    ControllerProduit::$action();
+}
+
 //if (sizeof($_GET) == 2) {
 //    $parametre = $_GET['immat'];
 //    ControllerProduit::$action($parametre);
@@ -14,6 +20,6 @@ $action = $_GET['action'];
 //    $couleur = $_GET['couleur'];
 //    ControllerVoiture::$action($immat, $marque, $couleur);
 //} else {
-    ControllerProduit::$action();
+
 //}
 
