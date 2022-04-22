@@ -41,12 +41,14 @@ if (!isset($panier[$id_p])){
     $panier[$id_p]['qte']++;
 }
 $_SESSION['panier']=$panier;
-header('Location:listeProduits.php');
+//header('Location:listeProduits.php');
 
 echo "<pre>";
-print_r($panier);
-"</pre>";
+//print_r($panier);
+echo "yo mama";
+echo "</pre>";
 ?>
+<a href="controller/routeur.php?action=readAll">Voir produit</a>;
 <a href="deconnexion.php">O</a>;
 
 </body>

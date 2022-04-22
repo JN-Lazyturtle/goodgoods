@@ -5,10 +5,14 @@ class Configuration
 {
 
     static private $databases = array(
-        'hostname' => 'webinfo',
-        'database' => 'nussbaumerj',
-        'login' => 'nussbaumerj',
-        'password' => '7092021'
+//        'hostname' => 'webinfo',
+//        'database' => 'nussbaumerj',
+//        'login' => 'nussbaumerj',
+//        'password' => '7092021'
+        'hostname' => 'localhost',
+        'database' => 'goodgoods',
+        'login' => 'root',
+        'password' => 'root'
     );
 
     static private $debug = True;
