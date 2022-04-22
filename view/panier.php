@@ -1,6 +1,6 @@
 <?php
-session_start();
-?>
+//session_start();
+//?>
 <html>
 <head>
     <meta charset="UTF-8">

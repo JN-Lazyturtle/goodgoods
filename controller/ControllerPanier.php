@@ -1,12 +1,18 @@
 <?php
-require_once(File::build_path(array("model", "ModelProduit.php")));
+require_once(File::build_path(array("model", "ModelPanier.php")));
 
-class ControllerProduit {
-    public static function readAll() {
-        $tab_p = ModelProduit::getAllProduits();
-        require(File::build_path(array("view", "produits.php")));
+class ControllerPanier {
+
+    public static function voirPanier(){
+        require(File::build_path(array("view", "panier.php")));
     }
 
+//    public static function readAll() {
+//        $tab_p = ModelProduit::getAllProduits();    //appel au modèle pour gerer la BD
+////        require ('../view/voiture/list.php');       //"redirige" vers la vue
+//        require(File::build_path(array("view", "produits.php")));
+//    }
+//
 //    public static function read($immat) {
 //        $v = ModelVoiture::getVoitureByImmat($immat);     //appel au modèle pour gerer la BD
 //        if ($v == NULL)

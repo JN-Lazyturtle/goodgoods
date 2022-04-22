@@ -1,11 +1,12 @@
 <?php
+
 require(File::build_path(array("model", "ModelProduit.php")));
 
 class ControllerProduit {
     public static function readAll() {
         $tab_p = ModelProduit::getAllProduits();    //appel au modèle pour gerer la BD
 //        require ('../view/voiture/list.php');       //"redirige" vers la vue
-        require(File::build_path(array("view", "listeProduit.php")));
+        require(File::build_path(array("view", "produits.php")));
     }
 
     public static function read($immat) {

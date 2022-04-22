@@ -1,9 +1,8 @@
 <?php
-require(File::build_path(array("config", "Configuration.php")));
+require_once(File::build_path(array("config", "Configuration.php")));
 
-class Model
+class Model {
 // class singleton
-{
 
     private static $pdo = NULL;
 
@@ -21,6 +20,7 @@ class Model
         } catch (PDOException $e) {
             if (Configuration::getDebug()) {
                 echo $e->getMessage(); // affiche un message d'erreur
+                echo "erreur juste la";
             } else {
                 echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
             }
