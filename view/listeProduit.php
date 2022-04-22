@@ -2,25 +2,26 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Liste des voitures</title>
+    <title>~ Nos good goods ~</title>
 </head>
-<body>
+<body style="background-color: darkolivegreen">
 <?php
 
 if (!empty($tab_p)) {
-//    echo '<pre>';
-//    print_r($tab_p);
-//    echo '</pre>';
+    echo '<pre>';
+    print_r($tab_p);
+    echo '</pre>';
 
     echo"<div class='listeProduit'>";
     foreach ($tab_p as $p){
-        echo "<div class='cadre' style='background-color: antiquewhite'>
+        echo "<div class='cadre' style='width : 60%'>
                     
                     <h2>".$p->getNom()."</h2>
-                    <img class='gif' style='width:30%' src='../img/".$p->getIdProduit().".png'>
+                    <img class='gif' style='width:20%' src='../img/".$p->getIdProduit().".png'>
                     <p>". $p->getDescription() ."</p>
                     <h3>".$p->getPrix()."€</h3>
-                    
+                    <a href='model/ajoutPanier.php?id=".$p->getIdProduit()."&prix=".$p->getPrix()."&page=listeProduit'>Ajouter au panier</a>
+
              </div>";
     }
     echo "</div>";

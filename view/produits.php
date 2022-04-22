@@ -27,7 +27,7 @@ foreach ($lesProduits as $id => $leProduit) {
         . "<div>Tarif : {$leProduit['nom']}</div>"
         . "<div>Tarif : {$leProduit['libelle']}</div>"
         . "<div>Tarif : {$leProduit['prixU']}</div>"
-        . "<div><a href='ajoutPanier.php?id=$id&prixU={$leProduit['prixU']}&page=listeProduits'>+</a></div></div>";
+        . "<div><a href='ajoutPanier.php?id=$id&prixU=&page=listeProduits'>+</a></div></div>";
 }
 
 $quantite = 0;
