@@ -8,8 +8,8 @@
     <a href='indexx.php?'>Nos good goods</a>
     <a href='indexx.php?action=readAll&controller=utilisateur'>Accueil utilisateur</a>
     <a href='indexx.php?action=voirPanier&controller=ControllerPanier'>Mon panier</a>
-    <a href='indexx.php?action=connexion&controller=ControllerUtilisateur'>Se connecter</a>
-    <a href='indexx.php?action=creerCompte&controller=ControllerUtilisateur'>Créer un compte</a>
+    <a href='indexx.php?action=formConnexion&controller=ControllerUtilisateur'>Se connecter</a>
+    <a href='indexx.php?action=formCreationCompte&controller=ControllerUtilisateur'>Créer un compte</a>
 
 </header>
 <body>

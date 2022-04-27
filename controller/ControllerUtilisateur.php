@@ -4,6 +4,18 @@ require(File::build_path(array("model", "ModelUtilisateur.php")));
 
 class ControllerUtilisateur {
 
+    public static function formConnection(){
+        $view='connexion';
+        $pagetitle='Se connecter';
+        require(File::build_path(array("view", "view.php")));
+    }
+
+    public static function formCreationCompte(){
+        $view='creationCompte';
+        $pagetitle='Créez un compte';
+        require(File::build_path(array("view", "view.php")));
+    }
+
     /** trouve les infos correspondants à l'utilisateurs et créer un objet utilisateur stocké dans session
      * si l'association mail/mdp ne corresponds à personne dans la base, renvoies vers une page d'erreur */
     public static function connexion($mail, $mdp){
