@@ -36,16 +36,14 @@ class ControllerUtilisateur {
     si il manque le mail ou le mdp on renvois sur une page d'erreur*/
     public static function creerCompte($mail, $mdp, $prenom, $nom, $adresse){
         if ($mail!='' && ModelUtilisateur::mailEstDisponible($mail) && $mdp!='' && !is_null($mdp)) {
-        $utilisateur = new ModelUtilisateur($mail, $mdp, $nom, $prenom, $adresse);
-        $utilisateur->save();
-        ControllerUtilisateur::connexion($mail, $mdp);
-        $view='produits';
-        $pagetitle='Nos Good Goods';
-        require File::build_path(array("view", "view.php"));
+            $utilisateur = new ModelUtilisateur($mail, $mdp, $nom, $prenom, $adresse);
+            $utilisateur->save();
+            ControllerUtilisateur::connexion($mail, $mdp);
+            ControllerProduit::readAll();
         }else {
             $view = 'erreur_connexion';
             $pagetitle = 'Erreur connexion';
-            ControllerProduit::readAll();
+            require File::build_path(array("view", "view.php"));
         }
     }
 
