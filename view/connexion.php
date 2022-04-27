@@ -14,11 +14,14 @@
 </html>
 
 
-<form class="form-horizontal" method="get" action="../index2.php">
+<form class="form-horizontal" method="get" action="indexx.php">
     <fieldset>
 
         <!-- Form Name -->
         <legend>Connexion</legend>
+
+        <input type='hidden' name='action' value='connexion'>
+        <input type='hidden' name='controller' value='ControllerUtilisateur'>
 
         <!-- Text input-->
         <div class="form-group">
@@ -35,14 +38,11 @@
             </div>
         </div>
 
-        <input type='hidden' name='action' value='connexion'>
-        <input type='hidden' name='controller' value='ControllerUtilisateur'>
-
         <!-- Button -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="singlebutton"><p></p></label>
             <div class="col-md-12 text-center">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">Valider</button>
+                <button id="singlebutton" class="btn btn-primary">Valider</button>
             </div>
         </div>
 

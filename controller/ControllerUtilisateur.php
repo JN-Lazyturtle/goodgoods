@@ -1,10 +1,11 @@
 <?php
 
 require(File::build_path(array("model", "ModelUtilisateur.php")));
+require_once (File::build_path(array("controller", 'ControllerProduit.php')));
 
 class ControllerUtilisateur {
 
-    public static function formConnection(){
+    public static function formConnexion(){
         $view='connexion';
         $pagetitle='Se connecter';
         require(File::build_path(array("view", "view.php")));
@@ -27,9 +28,7 @@ class ControllerUtilisateur {
             require File::build_path(array("view", "view.php"));
         } else {
             $_SESSION['utilisateur'] = $utilisateur;
-            $view='produits';
-            $pagetitle='Nos Good Goods';
-            require File::build_path(array("view", "view.php"));
+            ControllerProduit::readAll();
         }
     }
 
@@ -43,10 +42,11 @@ class ControllerUtilisateur {
         $view='produits';
         $pagetitle='Nos Good Goods';
         require File::build_path(array("view", "view.php"));
-        }else{
-            $view='erreur_connexion';
-            $pagetitle='Erreur connexion';
-            require File::build_path(array("view", "view.php"));}
+        }else {
+            $view = 'erreur_connexion';
+            $pagetitle = 'Erreur connexion';
+            ControllerProduit::readAll();
+        }
     }
 
 }

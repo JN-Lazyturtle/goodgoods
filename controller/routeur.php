@@ -17,8 +17,11 @@ if(empty($_GET)){
     $action = $_GET['action'];
     $controller = $_GET['controller'];
     switch ($action) { # chaque cas = un nombre d'arguments
-        case 'creerCompte': ControllerUtilisateur::creerCompte($_GET['mail'], $_GET['mdp'], $_GET['nom'], $_GET['prenom'], $_GET['adresse']); break;
+
+        case 'connexion' : $controller::$action($_GET['mail'], $_GET['mdp']); break;
+        case 'creerCompte': $controller::$action($_GET['mail'], $_GET['mdp'], $_GET['nom'], $_GET['prenom'], $_GET['adresse']); break;
         default : $controller::$action(); break;
+
     }
 }
 

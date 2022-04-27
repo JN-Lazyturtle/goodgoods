@@ -18,11 +18,14 @@
         <!-- Form Name -->
         <legend>Création de compte</legend>
 
+        <input type='hidden' name='action' value='creerCompte'>
+        <input type='hidden' name='controller' value='ControllerUtilisateur'>
+
         <!-- mail -->
         <div class="form-group" style="display: flex">
             <label class="col-md-4 control-label" for="textinput">adresse mail</label>
             <div class="col-md-4">
-                <input id="textinput" name="mail" type="text" placeholder="chantal-goya@yahoo.fr" class="form-control input-md" required onkeyup="erreurmail(this);">
+                <input id="mail" name="mail" type="text" placeholder="chantal-goya@yahoo.fr" class="form-control input-md" required onkeyup="erreurmail(this);">
             </div>
             <div class="col-md-3" id="erreurMail" style="border: solid; color: lightcoral; text-align: center; display: none">vous devez entrez une adresse mail valide !  </div>
         </div>
@@ -55,15 +58,11 @@
             </div>
         </div>
 
-
-        <input type='hidden' name='action' value='creerCompte'>
-        <input type='hidden' name='controller' value='ControllerUtilisateur'>
-
         <!-- Button -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="singlebutton"><p></p></label>
             <div class="col-md-12 text-center">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary" onclick='return validForm();'>Valider</button>
+                <button id="singlebutton" class="btn btn-primary" onclick='return validForm();'>Valider</button>
             </div>
         </div>
 
@@ -71,23 +70,26 @@
 </form>
 
 <script type="text/javascript">
-    var formOk = false;
+
+    window.value = false; //le seul moyen que j'ai trouvé pour faire une variable globale :(
 
     function erreurmail(email) {
+        let formOk;
         var e = document.querySelector('#erreurMail');
         var valid = (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).test(email.value);
         if (valid) { //si le courriel est valide, on cache l'erreur
             e.style.display = 'none';
-            formOk = false;
+            window.value = true;
             return false;
         } else {
             e.style.display = 'block';
-            formOk = true;
+            window.value =  false;
             return true;
         }
     }
     function validForm(){
-        if (formOk) return true;
+        console.log(window.value)
+        if (window.value){ return true;}
         return false;
     }
 
