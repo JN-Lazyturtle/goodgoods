@@ -1,36 +1,30 @@
 <?php
 
-require(File::build_path(array("model", "ModelProduit.php")));
+require(File::build_path(array("model", "ModelUtilisateur.php")));
 
-class ControllerProduit {
-    public static function readAll() {
-        $tab_p = ModelProduit::getAllProduits();    //appel au modèle pour gerer la BD
-//        require ('../view/voiture/list.php');       //"redirige" vers la vue
-        require(File::build_path(array("view", "produits.php")));
+class ControllerUtilisateur {
+
+    /** trouve les infos correspondants à l'utilisateurs et créer un objet utilisateur stocké dans session
+     * si l'association mail/mdp ne corresponds à personne dans la base, renvoies vers une page d'erreur */
+    public static function connexion($mail, $mdp){
+        session_start();
+        $utilisateur = ModelUtilisateur::getUtilisateur($mail, $mdp);
+        if ($utilisateur == false){
+            require File::build_path(array("view", "erreur_connnexion.php"));
+        } else {
+            $_SESSION['utilisateur'] = $utilisateur;
+        }
     }
 
-    public static function read($immat) {
-        $v = ModelVoiture::getVoitureByImmat($immat);     //appel au modèle pour gerer la BD
-        if ($v == NULL)
-            require(File::build_path(array("view", "voiture", "error.php")));
-        else
-            require(File::build_path(array("view", "voiture", "detail.php")));
+    /** créer un objet utilisateur et le sauvegarde dans la base de donnée
+    si il manque le mail ou le mdp on renvois sur une page d'erreur*/
+    public static function creerCompte($mail, $mdp, $prenom, $nom, $adresse){
+        if ($mail!='' && ModelUtilisateur::mailEstDisponible($mail) && $mdp!='' && !is_null($mdp)) {
+        $utilisateur = new ModelUtilisateur($mail, $mdp, $nom, $prenom, $adresse);
+        $utilisateur->save();
+        }else{require File::build_path(array("view", "erreur_connnexion.php"));}
     }
 
-    public static function create(){
-        require(File::build_path(array("view", "voiture", "create.php")));
-    }
-
-    public static function created($immat, $marque, $couleur){
-        $voiture = new ModelVoiture($marque, $couleur, $immat);
-        $voiture->save();
-        self::readAll();
-    }
-
-    public static function delete($immat){
-        ModelVoiture::delete($immat);
-        self::readAll();
-    }
 }
 
 

@@ -14,26 +14,30 @@
 </html>
 
 
-<form class="form-horizontal" method="post" action="TRTauthentification.php">
+<form class="form-horizontal" method="get" action="../index2.php">
     <fieldset>
 
         <!-- Form Name -->
-        <legend>Authentification</legend>
+        <legend>Connexion</legend>
 
         <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="textinput">Login</label>
+            <label class="col-md-4 control-label" for="textinput">adresse mail</label>
             <div class="col-md-4">
-                <input id="textinput" name="login" type="text" placeholder="placeholder" class="form-control input-md">
+                <input id="textinput" name="mail" type="text" placeholder="chantal-goya@yahoo.fr" class="form-control input-md" required>
             </div>
         </div>
         <!-- Password input-->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="passwordinput">Password</label>
+            <label class="col-md-4 control-label" for="passwordinput">mot de passe</label>
             <div class="col-md-4">
-                <input id="passwordinput" name="mdp" type="password" placeholder="placeholder" class="form-control input-md">
+                <input id="passwordinput" name="mdp" type="password" placeholder="124GHTUxu8@5" class="form-control input-md" required>
             </div>
         </div>
+
+        <input type='hidden' name='action' value='connexion'>
+        <input type='hidden' name='controller' value='ControllerUtilisateur'>
+
         <!-- Button -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="singlebutton"><p></p></label>
