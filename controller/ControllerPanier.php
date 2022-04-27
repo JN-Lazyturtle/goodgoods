@@ -4,7 +4,9 @@ require_once(File::build_path(array("model", "ModelPanier.php")));
 class ControllerPanier {
 
     public static function voirPanier(){
-        require(File::build_path(array("view", "panier.php")));
+        $view='panier';
+        $pagetitle='Mon panier';
+        require(File::build_path(array("view", "view.php")));
     }
 
 //    public static function readAll() {

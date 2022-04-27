@@ -1,56 +1,37 @@
 <?php
-require(File::build_path(array("model", "Model.php")));
+require_once(File::build_path(array("model", "Model.php")));
 
 class ModelPanier {
 
-    private $idProduit;
-    private $nom;
-    private $prix;
-    private $description;
-
-    // getteur
-    public function getidProduit(){
-        return $this->idProduit;
-    }
-
-    public function getNom(){
-        return $this->nom;
-    }
-
-    public function getPrix(){
-        return $this->prix;
-    }
-
-    public function getDescription(){
-        return $this->description;
-    }
+    private $idPanier;
+    private $date;
+    private $mailUtilisateur;
 
 
     // un constructeur
-    public function __construct($idProduit = NULL, $nom = NULL, $prix = NULL, $description = NULL){
-        if (!is_null($idProduit) && !is_null($nom) && !is_null($prix) && !is_null($description)) {
-            $this->idProduit = $idProduit;
-            $this->nom = $nom;
-            $this->prix = $prix;
-            $this->description = $description;
+    public function __construct($mailUtilisateur = NULL){
+        if (!is_null($mailUtilisateur)) {
+//            $this->idPanier = $idPanier;
+//            $this->date = $date;
+            $this->mailUtilisateur = $mailUtilisateur;
         }
     }
 
 
-//    // affichage
-//    public function afficher(){
-//        echo "<p>Voiture \""."\" de la marque ".$this->nom." (couleur ".$this->description.").</p>";
-//    }
 
 
     // méthode d'obtention de toutes les produits
-    static public function getAllProduits(){
+    static public function getAllProduitsPanier(){
 
-        $rep = Model::getPDO()->query("SELECT * FROM produits");  //obtenir une réponse illisible à la requête
+        $rep = Model::getPDO()->query("SELECT * FROM lignesPanier");  //obtenir une réponse illisible à la requête
         $rep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduit');        //rendre lisible la réponse en transformant en classe
         return $rep->fetchAll();
     }
 
+//    /** retourne le panier de la BDD si non existant creation et ajout BDD */
+//    static public function chargerPanierUtilisateur($idUtilisateur){
+//
+//    }
 
 //
 //    public static function getVoitureByImmat($immat) {
