@@ -23,6 +23,7 @@ if(empty($_GET)){
         case 3: $controller::$action($_GET[2], $_GET[3], $_GET[4]); break;
         case 4: $controller::$action($_GET[2], $_GET[3], $_GET[4], $_GET[5]); break;
         case 'creerCompte': ControllerUtilisateur::creerCompte($_GET['mail'], $_GET['mdp'], $_GET[4], $_GET[5], $_GET[6]); break;
+        default : $controller::$action(); break;
     }
 }
 
