@@ -10,9 +10,14 @@ class ControllerUtilisateur {
         session_start();
         $utilisateur = ModelUtilisateur::getUtilisateur($mail, $mdp);
         if ($utilisateur == false){
-            require File::build_path(array("view", "erreur_connnexion.php"));
+            $view='erreur_connexion';
+            $pagetitle='Erreur connexion';
+            require File::build_path(array("view", "view.php"));
         } else {
             $_SESSION['utilisateur'] = $utilisateur;
+            $view='produits';
+            $pagetitle='Nos Good Goods';
+            require File::build_path(array("view", "view.php"));
         }
     }
 
@@ -22,7 +27,14 @@ class ControllerUtilisateur {
         if ($mail!='' && ModelUtilisateur::mailEstDisponible($mail) && $mdp!='' && !is_null($mdp)) {
         $utilisateur = new ModelUtilisateur($mail, $mdp, $nom, $prenom, $adresse);
         $utilisateur->save();
-        }else{require File::build_path(array("view", "erreur_connnexion.php"));}
+        ControllerUtilisateur::connexion($mail, $mdp);
+        $view='produits';
+        $pagetitle='Nos Good Goods';
+        require File::build_path(array("view", "view.php"));
+        }else{
+            $view='erreur_connexion';
+            $pagetitle='Erreur connexion';
+            require File::build_path(array("view", "view.php"));}
     }
 
 }
