@@ -6,18 +6,17 @@ class ModelPanier {
     private $idPanier;
     private $date;
     private $mailUtilisateur;
+    private $lignesPanier;
 
 
     // un constructeur
-    public function __construct($mailUtilisateur = NULL){
-        if (!is_null($mailUtilisateur)) {
-//            $this->idPanier = $idPanier;
-//            $this->date = $date;
+    public function __construct($idPanier = NULL, $date = NULL, $mailUtilisateur = NULL){
+        if (!is_null($mailUtilisateur) && !is_null($date) && !is_null($idPanier)) {
+            $this->idPanier = $idPanier;
+            $this->date = $date;
             $this->mailUtilisateur = $mailUtilisateur;
         }
     }
-
-
 
 
     // méthode d'obtention de toutes les produits
