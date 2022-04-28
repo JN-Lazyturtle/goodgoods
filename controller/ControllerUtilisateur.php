@@ -2,7 +2,6 @@
 
 require(File::build_path(array("model", "ModelUtilisateur.php")));
 require_once (File::build_path(array("controller", 'ControllerProduit.php')));
-require_once (File::build_path(array("librairie", "Security.php")));
 
 class ControllerUtilisateur {
 
@@ -22,7 +21,6 @@ class ControllerUtilisateur {
      * si l'association mail/mdp ne corresponds à personne dans la base, renvoies vers une page d'erreur */
     public static function connexion($mail, $mdp){
         session_start();
-        $mdp = Security::hacher($mdp);
         $utilisateur = ModelUtilisateur::getUtilisateur($mail, $mdp);
         if ($utilisateur == false){
             $view='erreur_connexion';
@@ -37,7 +35,6 @@ class ControllerUtilisateur {
     /** créer un objet utilisateur et le sauvegarde dans la base de donnée
     si il manque le mail ou le mdp on renvois sur une page d'erreur*/
     public static function creerCompte($mail, $mdp, $prenom, $nom, $adresse){
-        $mdp = Security::hacher($mdp);
         if ($mail!='' && ModelUtilisateur::mailEstDisponible($mail) && $mdp!='' && !is_null($mdp)) {
             $utilisateur = new ModelUtilisateur($mail, $mdp, $nom, $prenom, $adresse);
             $utilisateur->save();

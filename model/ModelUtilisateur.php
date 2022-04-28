@@ -32,7 +32,6 @@ class ModelUtilisateur{
         $utilisateur = $req_prep->fetchAll();
         if (empty($utilisateur))
             return false;
-//        $utilisateur[0]->panier = ModelPanier::chargerPanierUtilisateur($mail);
         return $utilisateur[0];
     }
 
