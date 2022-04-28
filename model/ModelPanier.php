@@ -10,68 +10,70 @@ class ModelPanier {
 
 
     // un constructeur
-    public function __construct($idPanier = NULL, $date = NULL, $mailUtilisateur = NULL){
-        if (!is_null($mailUtilisateur) && !is_null($date) && !is_null($idPanier)) {
+    public function __construct($idPanier = NULL, $mailUtilisateur = NULL){
+        if (!is_null($mailUtilisateur) && !is_null($idPanier)) {
             $this->idPanier = $idPanier;
-            $this->date = $date;
             $this->mailUtilisateur = $mailUtilisateur;
         }
     }
 
+    // get panier de la base de données
+    public function getPanierParID($idPanier){
+
+    }
+
+//    // creer un panier vide, enregistre dans la base de donnée et retourne l'id de la base de donnée
+//    abstract public function creationPanierVide(){
+//        
+//    }
+
+    public function save(){
+        $sql = "INSERT INTO `paniers` (`idPanier`, `date`, `mailUtilisateur`)
+                VALUES (:tag_idPanier, :tag_date, :tag_mailUtilisateur)";
+        $req_prep = model::getPDO()->prepare($sql);
+        $values = array(
+            "tag_idPanier" => $this->idPanier,
+            "tag_date" => $this->date,
+            "tag_mailUtilisateur" => $this->mailUtilisateur
+        );
+        try {
+        $req_prep->execute($values);
+        } catch (PDOException $e) {
+            echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            die();
+        }
+    }
 
     // méthode d'obtention de toutes les produits
     static public function getAllProduitsPanier(){
 
         $rep = Model::getPDO()->query("SELECT * FROM lignesPanier");  //obtenir une réponse illisible à la requête
-        $rep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduit');        //rendre lisible la réponse en transformant en classe
+        $rep->setFetchMode(PDO::FETCH_ASSOC);        //rendre lisible la réponse en transformant en classe
         return $rep->fetchAll();
     }
+
+//    static public function ajoutProduit($idProduit){
+//        if ($this->date == null){
+//            $this->date = date("m.d.y");
+//            "INSERT INTO 'paniers' ('date') VALUES (getdate())";
+//        }
+//        if ("SELECT idProduit FROM 'lignesPanier' WHERE idProduit = '$idProduit'" == NULL){
+//            $sql = "INSERT INTO `lignesPanier` (`idProduit`, `idPanier`, `quantite`)
+//                VALUES ($idProduit, $this->idPanier, 1)";
+//        } else {
+//            $quantite = "SELECT quantite FROM lignespanier WHERE idProduit = '$idProduit'";
+//            "UPDATE lignesPanier SET quantite = '$quantite+1' WHERE idProduit = '$idProduit'";
+//        }
+//    }
+
 
 //    /** retourne le panier de la BDD si non existant creation et ajout BDD */
 //    static public function chargerPanierUtilisateur($idUtilisateur){
 //
 //    }
 
-//
-//    public static function getVoitureByImmat($immat) {
-//        $sql = "SELECT * from voiture WHERE immatriculation=:nom_tag";
-//        // Préparation de la requête
-//        $req_prep = Model::getPDO()->prepare($sql);
-//
-//        $values = array(
-//            "nom_tag" => $immat,
-//            //nomdutag => valeur, ...
-//        );
-//        // On donne les valeurs et on exécute la requête
-//        $req_prep->execute($values);
-//
-//        // On récupère les résultats comme précédemment
-//        $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelVoiture');
-//        $tab_voit = $req_prep->fetchAll();
-//        // Attention, si il n'y a pas de résultats, on renvoie false
-//        if (empty($tab_voit))
-//            return false;
-//        return $tab_voit[0];
-//    }
-//
-//
-//    public function save(){
-//        $sql = "INSERT INTO `voiture` (`immatriculation`, `marque`, `couleur`)
-//                VALUES (:tag_immatriculation, :tag_marque, :tag_couleur)";
-//        $req_prep = model::getPDO()->prepare($sql);
-//        $values = array(
-//            "tag_marque" => $this->marque,
-//            "tag_immatriculation" => $this->immatriculation,
-//            "tag_couleur" => $this->couleur
-//        );
-//
-//        try {
-//        $req_prep->execute($values);
-//        } catch (PDOException $e) {
-//            echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
-//            die();
-//        }
-//    }
+
+
 //
 //    public static function delete($immat) {
 //        $sql = "DELETE FROM voiture WHERE immatriculation=:nom_tag";
