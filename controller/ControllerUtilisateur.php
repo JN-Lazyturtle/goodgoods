@@ -20,7 +20,6 @@ class ControllerUtilisateur {
     /** trouve les infos correspondants à l'utilisateurs et créer un objet utilisateur stocké dans session
      * si l'association mail/mdp ne corresponds à personne dans la base, renvoies vers une page d'erreur */
     public static function connexion($mail, $mdp){
-        session_start();
         $utilisateur = ModelUtilisateur::getUtilisateur($mail, $mdp);
         if ($utilisateur == false){
             $view='erreur_connexion';

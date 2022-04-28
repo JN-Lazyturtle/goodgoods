@@ -4,12 +4,23 @@
     <meta charset="UTF-8">
     <title><?php echo $pagetitle; ?></title>
 </head>
-<header>
-    <a href='indexx.php?'>Nos good goods</a>
-    <a href='indexx.php?action=readAll&controller=utilisateur'>Accueil utilisateur</a>
-    <a href='indexx.php?action=voirPanier&controller=ControllerPanier'>Mon panier</a>
-    <a href='indexx.php?action=formConnexion&controller=ControllerUtilisateur'>Se connecter</a>
-    <a href='indexx.php?action=formCreationCompte&controller=ControllerUtilisateur'>Créer un compte</a>
+<header style = "display: flex; justify-content: space-between">
+    <div>
+        <a href='indexx.php?' style='margin: 5px'>Nos good goods</a>
+    </div>
+    <div>
+        <?php
+        if (isset($_SESSION['utilisateur']))
+        echo "Bonjour ".$_SESSION['utilisateur']->getprenom();
+
+        echo "<a href='indexx.php?action=voirPanier&controller=ControllerPanier' style='margin: 5px'>Mon panier</a>";
+
+        if (!isset($_SESSION['utilisateur'])) {
+            echo "<a href='indexx.php?action=formConnexion&controller=ControllerUtilisateur' style='margin: 5px'>Se connecter</a>";
+            echo "<a href='indexx.php?action=formCreationCompte&controller=ControllerUtilisateur' style='margin: 5px'>Créer un compte</a>";
+        }
+        ?>
+    </div>
 
 </header>
 <body>
