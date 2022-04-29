@@ -27,7 +27,7 @@ class ControllerUtilisateur {
             require File::build_path(array("view", "view.php"));
         } else {
             $_SESSION['utilisateur'] = $utilisateur;
-            ControllerProduit::readAll();
+            header('Location: indexx.php');
         }
     }
 
@@ -38,7 +38,6 @@ class ControllerUtilisateur {
             $utilisateur = new ModelUtilisateur($mail, $mdp, $nom, $prenom, $adresse);
             $utilisateur->save();
             ControllerUtilisateur::connexion($mail, $mdp);
-            ControllerProduit::readAll();
         }else {
             $view = 'erreur_connexion';
             $pagetitle = 'Erreur connexion';

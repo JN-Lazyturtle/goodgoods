@@ -8,8 +8,8 @@ En cours :
 - classe panier :
     refaire getAllProduitsPanier = appelle directement lignePanier qui est à jour
     ligne panier a mettre dans le constructeur : 
-    rajouter getproduitparID dans produit
-    tabl lignepanier indexe par idproduit et associé à une quantité +++ creer une fonction acceder au produit par idproduit
+    rajouter getproduitparID dans produit // FAIT 
+    tableau lignepanier : indexé par idproduit et associé à une quantité
 - session() : 
     organisation session : $_SESSION['utilisateur'] et $_SESSION['panier'] distinct
     si non connecté, $_SESSION['utilisateur'] n'existe pas et $_SESSION['panier'] corresponds à un panier temporraire

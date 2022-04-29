@@ -8,7 +8,6 @@ class ModelUtilisateur{
     private $nom;
     private $prenom;
     private $adresse;
-    private $panier;
 
 
     public function __construct($mail=NULL, $mdp=NULL, $nom=NULL, $prenom=NULL, $adresse=NULL){
@@ -18,7 +17,6 @@ class ModelUtilisateur{
             $this->nom = $nom;
             $this->prenom = $prenom;
             $this->adresse = $adresse;
-            //$this->panier = ModelPanier::chargerPanierUtilisateur($mail);
         }
     }
 
@@ -58,13 +56,26 @@ class ModelUtilisateur{
     static function mailEstDisponible($mail){
         $sql = "SELECT mail FROM Utilisateurs";
         $req_prep = Model::getPDO()->prepare($sql);
-        $values = array("mail" => $mail,);
-        $req_prep->execute($values);
+        $req_prep->execute();
         $tab_mails = $req_prep->fetchAll();
         foreach ($tab_mails as $res){
             if ($res[0] == $mail){return false;}
         }
         return true;
+    }
+
+    /** retourne le panier de la BDD si non existant creation et ajout BDD */
+    public function chargerPanierUtilisateur(){
+        $sql = "SELECT idPanier FROM panier WHERE mailUtilisateur = :mail";
+        $req_prep = Model::getPDO()->prepare($sql);
+        $values = array("mail" => $this->mail,);
+        $req_prep->execute($values);
+        $tab_idPanier = $req_prep->fetchAll();
+        if (empty($tab_idPanier[0])){ // si l'utilisateur n'as pas de panier on en créer un
+            $idPanier = ModelPanier::creationPanierVide();
+            return ModelPanier::getPanierParId($idPanier);
+        }
+        else return ModelPanier::getPanierParId($tab_idPanier[0][0]);
     }
 
     public function __toString()
@@ -98,10 +109,6 @@ class ModelUtilisateur{
         return $this->adresse;
     }
 
-    public function getPanier()
-    {
-        return $this->panier;
-    }
 
 
 

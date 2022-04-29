@@ -9,7 +9,6 @@ class ModelPanier {
     private $lignesPanier;
 
 
-    // un constructeur
     public function __construct($idPanier = NULL, $mailUtilisateur = NULL){
         if (!is_null($mailUtilisateur) && !is_null($idPanier)) {
             $this->idPanier = $idPanier;
@@ -17,15 +16,16 @@ class ModelPanier {
         }
     }
 
-    // get panier de la base de données
+    /**  get panier de la base de données */
     public function getPanierParID($idPanier){
 
     }
 
-//    // creer un panier vide, enregistre dans la base de donnée et retourne l'id de la base de donnée
-//    abstract public function creationPanierVide(){
-//        
-//    }
+    /** - creer un panier vide et l'enregistre dans la base de donnée
+        - retourne le panier crée
+        - attention à ne pas créer deux panier pour la même personne ! */
+   static public function creationPanierVide(){
+   }
 
     public function save(){
         $sql = "INSERT INTO `paniers` (`idPanier`, `date`, `mailUtilisateur`)
@@ -39,7 +39,7 @@ class ModelPanier {
         try {
         $req_prep->execute($values);
         } catch (PDOException $e) {
-            echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            echo 'Une erreur est survenue <a href="indexx.php"> retour a la page d\'accueil </a>';
             die();
         }
     }
