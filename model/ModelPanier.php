@@ -37,27 +37,17 @@ class ModelPanier {
     }
 
     /** - creer un panier vide et l'enregistre dans la base de donnée
-        - retourne le panier crée
         - attention à ne pas créer deux panier pour la même personne ! */
-   static public function creationPanierVide(){
+   static public function creationPanierVide($mailUtilisateur){
+       // creation du panier dans la BDD
+       $sql = "INSERT INTO `paniers` (`mailUtilisateur`)
+                VALUES (:tag_mailUtilisateur)";
+       $req_prep = model::getPDO()->prepare($sql);
+       $values = array(
+           "tag_mailUtilisateur" => $mailUtilisateur
+       );
+       $req_prep->execute($values);
    }
-
-    public function save(){
-        $sql = "INSERT INTO `paniers` (`idPanier`, `date`, `mailUtilisateur`)
-                VALUES (:tag_idPanier, :tag_date, :tag_mailUtilisateur)";
-        $req_prep = model::getPDO()->prepare($sql);
-        $values = array(
-            "tag_idPanier" => $this->idPanier,
-            "tag_date" => $this->date,
-            "tag_mailUtilisateur" => $this->mailUtilisateur
-        );
-        try {
-        $req_prep->execute($values);
-        } catch (PDOException $e) {
-            echo 'Une erreur est survenue <a href="indexx.php"> retour a la page d\'accueil </a>';
-            die();
-        }
-    }
 
     /** Retourne un tableau des produits présents dans le panier en BDD
         le tableau est indexé par idProduit avec une quantité associée */

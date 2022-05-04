@@ -19,6 +19,7 @@
             echo "<a href='indexx.php?action=formConnexion&controller=ControllerUtilisateur' style='margin: 5px'>Se connecter</a>";
             echo "<a href='indexx.php?action=formCreationCompte&controller=ControllerUtilisateur' style='margin: 5px'>Créer un compte</a>";
         }
+
         ?>
     </div>
 
