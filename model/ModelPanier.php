@@ -87,21 +87,19 @@ class ModelPanier {
         return $this->lignesPanier;
     }
 
-
-
-//    static public function ajoutProduit($idProduit){
-//        if ($this->date == null){
-//            $this->date = date("m.d.y");
-//            "INSERT INTO 'paniers' ('date') VALUES (getdate())";
-//        }
-//        if ("SELECT idProduit FROM 'lignesPanier' WHERE idProduit = '$idProduit'" == NULL){
-//            $sql = "INSERT INTO `lignesPanier` (`idProduit`, `idPanier`, `quantite`)
-//                VALUES ($idProduit, $this->idPanier, 1)";
-//        } else {
-//            $quantite = "SELECT quantite FROM lignespanier WHERE idProduit = '$idProduit'";
-//            "UPDATE lignesPanier SET quantite = '$quantite+1' WHERE idProduit = '$idProduit'";
-//        }
-//    }
+    public function ajoutProduitPanier($idProduit){
+        if ($this->date == null){
+            $this->date = date("m.d.y");
+            "INSERT INTO 'paniers' ('date') VALUES (getdate())";
+        }
+        if ("SELECT idProduit FROM 'lignesPanier' WHERE idProduit = '$idProduit'" == NULL){
+            $sql = "INSERT INTO `lignesPanier` (`idProduit`, `idPanier`, `quantite`)
+                VALUES ($idProduit, $this->idPanier, 1)";
+        } else {
+            $quantite = "SELECT quantite FROM lignespanier WHERE idProduit = '$idProduit'";
+            "UPDATE lignesPanier SET quantite = '$quantite+1' WHERE idProduit = '$idProduit'";
+        }
+    }
 
 
 //    /** retourne le panier de la BDD si non existant creation et ajout BDD */

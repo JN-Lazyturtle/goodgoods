@@ -16,7 +16,7 @@ foreach ($tab_p as $p) {
                     <img class='gif' style='width:15%' src='" . $source . "'>
                     <p>" . $p->getDescription() . "</p>
                     <h3>" . $p->getPrix() . "€</h3>
-                    <a href='model/ajoutPanier.php?id=" . $p->getIdProduit() . "&prix=" . $p->getPrix() . "&page=listeProduit'>Ajouter au panier</a>
+                    <a href='indexx.php?action=majPanierAjout&controller=ControllerPanier&id=" . $p->getIdProduit() . "'>Ajouter au panier</a>
              </div>";
 }
 echo "</div>";

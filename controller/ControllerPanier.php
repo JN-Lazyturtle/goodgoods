@@ -9,6 +9,11 @@ class ControllerPanier {
         require(File::build_path(array("view", "view.php")));
     }
 
+    public static function majPanierAjout($idProduit){
+        $panier = $_SESSION['panier'];
+        $panier->ajoutProduitPanier($idProduit);
+    }
+
 //    public static function readAll() {
 //        $tab_p = ModelProduit::getAllProduits();    //appel au modèle pour gerer la BD
 ////        require ('../view/voiture/list.php');       //"redirige" vers la vue

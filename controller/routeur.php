@@ -8,12 +8,10 @@ $myPost = array_values($_GET);
 
 // On recupère l'action passée dans l'URL
 if(empty($_GET)){
-
     //creation d'un panier temp dans $SESSION a detruire en cas de connexion
     ControllerProduit::readAll();
 
 } else {
-
     $action = $_GET['action'];
     $controller = $_GET['controller'];
     switch (sizeof($myPost)-2) { # chaque cas = un nombre d'arguments
@@ -22,10 +20,7 @@ if(empty($_GET)){
         case 3 : $controller::$action($myPost[2], $myPost[3], $myPost[4]); break;
         case 4 : $controller::$action($myPost[2], $myPost[3], $myPost[4], $myPost[5]); break;
         case 5 : $controller::$action($myPost[2], $myPost[3], $myPost[4], $myPost[5], $myPost[6]); break;
-//        case 'connexion' : $controller::$action($_GET['mail'], $_GET['mdp']); break;
-//        case 'creerCompte': $controller::$action($_GET['mail'], $_GET['mdp'], $_GET['nom'], $_GET['prenom'], $_GET['adresse']); break;
         default : $controller::$action(); break;
-
     }
 }
 
