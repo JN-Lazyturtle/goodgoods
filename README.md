@@ -6,10 +6,9 @@ En cours :
 
 - classe utilisateur
 - classe panier :
-    refaire getAllProduitsPanier = appelle directement lignePanier qui est à jour
-    ligne panier a mettre dans le constructeur : 
-    rajouter getproduitparID dans produit // FAIT 
     tableau lignepanier : indexé par idproduit et associé à une quantité
+    date gérer et mise à jour par ajout produit (quand on ajoute dans un panier vide)
+    
 - session() : 
     organisation session : $_SESSION['utilisateur'] et $_SESSION['panier'] distinct
     si non connecté, $_SESSION['utilisateur'] n'existe pas et $_SESSION['panier'] corresponds à un panier temporraire

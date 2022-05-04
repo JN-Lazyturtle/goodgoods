@@ -25,6 +25,10 @@
 </header>
 <body>
 <?php
+foreach (ModelPanier::getPanierParMail('a@a.aa')->getLignesPanier() as $idProduit => $ligne){
+    echo "<div>".ModelProduit::getProduitParId($idProduit)->getNom()." x".$ligne."</div>";
+}
+
 $filepath = File::build_path(array("view", "$view.php"));
 require $filepath;
 ?>

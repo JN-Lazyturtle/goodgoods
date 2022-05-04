@@ -4,21 +4,36 @@ require_once(File::build_path(array("model", "Model.php")));
 class ModelPanier {
 
     private $idPanier;
-    private $date;
     private $mailUtilisateur;
+    private $date;
     private $lignesPanier;
 
 
-    public function __construct($idPanier = NULL, $mailUtilisateur = NULL){
-        if (!is_null($mailUtilisateur) && !is_null($idPanier)) {
+    public function __construct($idPanier = NULL, $mailUtilisateur = NULL, $date = NULL, $lignesPanier = NULL){
+        if (!is_null($mailUtilisateur) && !is_null($idPanier) && !is_null($date)) {
             $this->idPanier = $idPanier;
             $this->mailUtilisateur = $mailUtilisateur;
+            $this->date = $date;
         }
+        if(is_null($lignesPanier)){$this->lignesPanier = [];}
+        else {$this->lignesPanier = $lignesPanier;}
     }
 
-    /**  get panier de la base de données */
-    public function getPanierParID($idPanier){
-
+    /**  Retourne un objet panier avec les infos de la base de données */
+    static public function getPanierParMail($mailUtilisateur){
+        $sql = "SELECT idPanier, date FROM paniers WHERE mailUtilisateur = :mail";
+        $req_prep = model::getPDO()->prepare($sql);
+        $values = array('mail' => $mailUtilisateur);
+        $req_prep->execute($values); // ici sont stockés l'id panier et la date
+        $res = $req_prep->fetchAll()[0];
+        if (empty($res)){
+            self::creationPanierVide();
+            self::getPanierParMail($mailUtilisateur);
+        }
+        else {
+            $tab_produits = ModelPanier::getAllProduitsPanier($res['idPanier']);
+            return new ModelPanier($res['idPanier'], $mailUtilisateur, $res['date'], $tab_produits);
+        }
     }
 
     /** - creer un panier vide et l'enregistre dans la base de donnée
@@ -44,13 +59,42 @@ class ModelPanier {
         }
     }
 
-    // méthode d'obtention de toutes les produits
-    static public function getAllProduitsPanier(){
-
-        $rep = Model::getPDO()->query("SELECT * FROM lignesPanier");  //obtenir une réponse illisible à la requête
-        $rep->setFetchMode(PDO::FETCH_ASSOC);        //rendre lisible la réponse en transformant en classe
-        return $rep->fetchAll();
+    /** Retourne un tableau des produits présents dans le panier en BDD
+        le tableau est indexé par idProduit avec une quantité associée */
+    static public function getAllProduitsPanier($idPanier){
+        $sql = "SELECT idProduit, quantite FROM lignesPanier WHERE idPanier = :idPanier";
+        $req_prep = Model::getPDO()->prepare($sql);
+        $values = array('idPanier' => $idPanier);
+        $req_prep->execute($values);
+        $res = [];
+        foreach ($req_prep->fetchAll() as $ligne){
+            $res[$ligne['idProduit']] = $ligne['quantite'];
+        }
+        return $res;
     }
+
+
+    public function getIdPanier()
+    {
+        return $this->idPanier;
+    }
+
+    public function getMailUtilisateur()
+    {
+        return $this->mailUtilisateur;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    public function getLignesPanier()
+    {
+        return $this->lignesPanier;
+    }
+
+
 
 //    static public function ajoutProduit($idProduit){
 //        if ($this->date == null){

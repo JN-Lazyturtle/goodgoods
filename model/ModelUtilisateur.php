@@ -72,8 +72,8 @@ class ModelUtilisateur{
         $req_prep->execute($values);
         $tab_idPanier = $req_prep->fetchAll();
         if (empty($tab_idPanier[0])){ // si l'utilisateur n'as pas de panier on en créer un
-            $idPanier = ModelPanier::creationPanierVide();
-            return ModelPanier::getPanierParId($idPanier);
+            ModelPanier::creationPanierVide();
+            return ModelPanier::getPanierParMail($this->mail);
         }
         else return ModelPanier::getPanierParId($tab_idPanier[0][0]);
     }
