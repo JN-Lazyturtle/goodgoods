@@ -25,15 +25,18 @@ class ModelPanier {
         $req_prep = model::getPDO()->prepare($sql);
         $values = array('mail' => $mailUtilisateur);
         $req_prep->execute($values); // ici sont stockés l'id panier et la date
-        $res = $req_prep->fetchAll()[0];
+        $res = $req_prep->fetchAll();
         if (empty($res)){
-            self::creationPanierVide();
-            self::getPanierParMail($mailUtilisateur);
+            self::creationPanierVide($mailUtilisateur);
+            $sql = "SELECT idPanier, date FROM paniers WHERE mailUtilisateur = :mail";
+            $req_prep = model::getPDO()->prepare($sql);
+            $values = array('mail' => $mailUtilisateur);
+            $req_prep->execute($values); // ici sont stockés l'id panier et la date
+            $res = $req_prep->fetchAll();
         }
-        else {
-            $tab_produits = ModelPanier::getAllProduitsPanier($res['idPanier']);
-            return new ModelPanier($res['idPanier'], $mailUtilisateur, $res['date'], $tab_produits);
-        }
+        $res = $res[0];
+        $tab_produits = ModelPanier::getAllProduitsPanier($res['idPanier']);
+        return new ModelPanier($res['idPanier'], $mailUtilisateur, $res['date'], $tab_produits);
     }
 
     /** - creer un panier vide et l'enregistre dans la base de donnée

@@ -64,19 +64,6 @@ class ModelUtilisateur{
         return true;
     }
 
-    /** retourne le panier de la BDD si non existant creation et ajout BDD */
-    public function chargerPanierUtilisateur(){
-        $sql = "SELECT idPanier FROM panier WHERE mailUtilisateur = :mail";
-        $req_prep = Model::getPDO()->prepare($sql);
-        $values = array("mail" => $this->mail,);
-        $req_prep->execute($values);
-        $tab_idPanier = $req_prep->fetchAll();
-        if (empty($tab_idPanier[0])){ // si l'utilisateur n'as pas de panier on en créer un
-            ModelPanier::creationPanierVide();
-            return ModelPanier::getPanierParMail($this->mail);
-        }
-        else return ModelPanier::getPanierParId($tab_idPanier[0][0]);
-    }
 
     public function __toString()
     {

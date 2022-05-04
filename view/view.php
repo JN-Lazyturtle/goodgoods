@@ -26,7 +26,7 @@
 </header>
 <body>
 <?php
-foreach (ModelPanier::getPanierParMail('a@a.aa')->getLignesPanier() as $idProduit => $ligne){
+foreach (ModelPanier::getPanierParMail('bla@bla.com')->getLignesPanier() as $idProduit => $ligne){
     echo "<div>".ModelProduit::getProduitParId($idProduit)->getNom()." x".$ligne."</div>";
 }
 
