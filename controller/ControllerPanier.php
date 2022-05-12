@@ -6,6 +6,7 @@ class ControllerPanier {
     public static function voirPanier(){
         $view='panier';
         $pagetitle='Mon panier';
+        $panier = $_SESSION['panier'];
         require(File::build_path(array("view", "view.php")));
     }
 

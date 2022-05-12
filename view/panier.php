@@ -1,23 +1,26 @@
 <?php
-$prixTotal = 0;
-$prixTotalPanier = 0;
-
-echo "<div>Mon panier</div>";
-
-echo "<table> <thead> 
-<tr><th>Produit :</th><th>Quantité :</th><th>Prix unitaire :</th><th>Montant total :</th><th>Ajouter :</th><th>Supprimer :</th></tr>";
-
-if(!empty($_SESSION['panier']->getLignesPanier())){
-foreach ($_SESSION['panier']->getLignesPanier() as $idProduit => $quantite)
-    $produit = ModelProduit::getProduitParId($idProduit);
-    $prixTotal = $produit->getPrix()*$quantite;
-    $prixTotalPanier += $prixTotal;
-echo "<tr><th>$produit->getNom()</th><th>{$quantite}</th><th>{$produit['prixU']}</th><th>$produit->getPrix()</th>
-            <th><a href='ajoutPanier.php?id=$idProduit&prixU={$produit['prixU']}&page=voirPanier'>+</a></th>
-            <th><a href='suppPanier.php?id=$idProduit&prixU={$produit['prixU']}&page=voirPanier'>-</a></th></tr>
-</thead>";
-
-echo "<div>$prixTotalPanier</div>";
+if (empty($panier->getLignesPanier())){echo "<h3> vous n'avez rien dans votre panier, pour revenir aux achats cliquez <a href='listeProduits.php'>ici</a></h3>";}
+else {
+    echo "<div>Mon panier</div>";
+    echo "<table>
+<thead>
+    <tr>
+        <th>nom</th>
+        <th>qte</th>
+        <th>prix</th>
+        <th>montant total</th>
+    </tr>
+</thead>
+<tbody>";
+    foreach ($panier->getLignesPanier() as $id => $qte) {
+        $produit = ModelProduit::getProduitParId($id);
+        echo "<tr> 
+        <td>" . $produit->getNom() . "</td>
+        <td>" . $qte . "</td>
+        <td>" . $produit->getPrix() . "</td>
+        <td>" . $produit->getPrix() * $qte. '</td>   
+    </tr>';
+    }
+    echo "</tbody> </table>";
 }
-echo "<div><a href='view/produits.php'>Retour aux produits</a></div>"
-?>
+

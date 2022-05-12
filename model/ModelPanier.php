@@ -90,14 +90,18 @@ class ModelPanier {
     public function ajoutProduitPanier($idProduit){
         if ($this->date == null){
             $this->date = date("m.d.y");
-            "INSERT INTO 'paniers' ('date') VALUES (getdate())";
+            Model::getPDO()->query("INSERT INTO 'paniers' ('date') VALUES (".$this->getDate().")")->fetchAll();
         }
-        if ("SELECT idProduit FROM 'lignesPanier' WHERE idProduit = '$idProduit'" == NULL){
-            $sql = "INSERT INTO `lignesPanier` (`idProduit`, `idPanier`, `quantite`)
-                VALUES ($idProduit, $this->idPanier, 1)";
+        $tab_lignePanier = Model::getPDO()->query("SELECT * FROM lignesPanier WHERE idProduit = '$idProduit'")->fetchAll()[0];
+        if (empty($tab_lignePanier)){ // si le produit n'est pas déjà présent dans le panier
+                Model::getPDO()->query("INSERT INTO `lignesPanier` (`idProduit`, `idPanier`, `quantite`)
+                VALUES ($idProduit, $this->idPanier, 1)")->fetAll();
+                $this->lignesPanier[$idProduit] = 1;
         } else {
-            $quantite = "SELECT quantite FROM lignespanier WHERE idProduit = '$idProduit'";
-            "UPDATE lignesPanier SET quantite = '$quantite+1' WHERE idProduit = '$idProduit'";
+            $quantite = Model::getPDO()->query("SELECT quantite FROM lignespanier WHERE idProduit = '$idProduit'")->fetchAll[0]['quantite'];
+            $quantite ++;
+            Model::getPDO()->query("UPDATE lignesPanier SET quantite = '$quantite' WHERE idProduit = '$idProduit'")->fetchAll;
+            $this->lignesPanier[$idProduit] = $quantite;
         }
     }
 

@@ -4,6 +4,8 @@ require_once File::build_path(array('controller', "ControllerPanier.php"));
 require_once File::build_path(array('controller', "ControllerProduit.php"));
 require_once File::build_path(array('controller', "ControllerUtilisateur.php"));
 
+session_start();
+
 $myPost = array_values($_GET);
 
 // On recupère l'action passée dans l'URL

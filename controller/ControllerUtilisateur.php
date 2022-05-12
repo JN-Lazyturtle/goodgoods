@@ -27,6 +27,7 @@ class ControllerUtilisateur {
             require File::build_path(array("view", "view.php"));
         } else {
             $_SESSION['utilisateur'] = $utilisateur;
+            $_SESSION['panier'] = ModelPanier::getPanierParMail($utilisateur->getMail());
             header('Location: indexx.php');
         }
     }
