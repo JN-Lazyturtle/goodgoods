@@ -18,7 +18,6 @@ class ControllerPanier {
         }
         if ($view == "panier"){
             self::voirPanier();
-//            header("Location: indexx.php");
         } else {
             ControllerProduit::readAll();
         }
@@ -31,7 +30,6 @@ class ControllerPanier {
             $panier->suppProduitPanierBDD($idProduit);
         }
         self::voirPanier();
-//        header("Location: indexx.php");
     }
 }
 
