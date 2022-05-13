@@ -92,15 +92,37 @@ class ModelPanier {
             $date = date("m.d.y");
             Model::getPDO()->query("INSERT INTO 'paniers' ('date') VALUES ($date)")->fetchAll();
         }
-        $tab_lignePanier = Model::getPDO()->query("SELECT * FROM lignesPanier WHERE idProduit = '$idProduit' AND idPanier = '$this->idPanier'")->fetchAll();
+        $tab_lignePanier = Model::getPDO()->query("SELECT * FROM lignesPanier 
+                                                    WHERE idProduit = '$idProduit' 
+                                                    AND idPanier = '$this->idPanier'")->fetchAll();
         if (empty($tab_lignePanier[0])){ // si le produit n'est pas déjà présent dans le panier
                 Model::getPDO()->query("INSERT INTO `lignesPanier` (`idProduit`, `idPanier`, `quantite`)
-                VALUES ($idProduit, $this->idPanier, 1)");
+                                        VALUES ($idProduit, $this->idPanier, 1)");
         } else {
-            $quantite = Model::getPDO()->query("SELECT quantite FROM lignespanier WHERE idProduit = '$idProduit' AND idPanier = '$this->idPanier'")->fetchAll()[0]['quantite'];
+            $quantite = Model::getPDO()->query("SELECT quantite FROM lignespanier 
+                                                WHERE idProduit = '$idProduit' 
+                                                AND idPanier = '$this->idPanier'")->fetchAll()[0]['quantite'];
             $quantite ++;
-            $req = Model::getPDO()->query("UPDATE lignesPanier SET quantite = '$quantite' WHERE idProduit = '$idProduit' AND idPanier = '$this->idPanier'");
+            $req = Model::getPDO()->query("UPDATE lignesPanier SET quantite = '$quantite' 
+                                            WHERE idProduit = '$idProduit' AND idPanier = '$this->idPanier'");
         }
+    }
+
+    public function suppProduitPanierBDD($idProduit){
+        $tab_lignePanier = Model::getPDO()->query("SELECT * FROM lignesPanier
+                                                    WHERE idProduit = '$idProduit'")->fetchAll()[0];
+        $quantite = $tab_lignePanier['quantite'];
+        if ($quantite == 1){
+            Model::getPDO()->query("DELETE FROM lignePanier WHERE idProduit = $idProduit");
+        } else {
+            $quantite -= 1;
+            Model::getPDO()->query("UPDATE lignesPanier SET quantite = '$quantite'
+                                        WHERE idProduit = '$idProduit' AND idPanier = '$this->idPanier'");
+        }
+    }
+
+    public function suppProduitPanierObjet($idProduit){
+
     }
 
     public function ajoutProduitPanierObjet($idProduit){
