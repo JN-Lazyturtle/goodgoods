@@ -142,6 +142,14 @@ class ModelPanier
         }
     }
 
+    public function updateDatePanierBDD(){
+        $estVide = Model::getPDO()->query("SELECT * FROM lignesPanier");
+        if ($estVide){
+            Model::getPDO()->query("UPDATE paniers SET date = NULL
+                                    WHERE idPanier = $this->idPanier");
+        }
+    }
+
     public function suppProduitPanierObjet($idProduit)
     {
         $indice = $this->lignesPanier[$idProduit];
@@ -150,5 +158,9 @@ class ModelPanier
         } else {
             $this->lignesPanier[$idProduit]--;
         }
+        if (empty($this->lignesPanier)){
+            $this->date = null;
+        }
     }
+
 }
