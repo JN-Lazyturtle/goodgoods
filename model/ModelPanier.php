@@ -135,18 +135,15 @@ class ModelPanier
         $quantite = $tab_lignePanier[0]['quantite'];
         if ($quantite == 1) {
             Model::getPDO()->query("DELETE FROM lignesPanier WHERE idProduit = $idProduit");
+            $estVide = Model::getPDO()->query("SELECT * FROM lignesPanier");
+            if ($estVide){
+                Model::getPDO()->query("UPDATE paniers SET date = NULL
+                                    WHERE idPanier = $this->idPanier");
+            }
         } else {
             $quantite -= 1;
             Model::getPDO()->query("UPDATE lignesPanier SET quantite = '$quantite'
                                         WHERE idProduit = '$idProduit' AND idPanier = '$this->idPanier'");
-        }
-    }
-
-    public function updateDatePanierBDD(){
-        $estVide = Model::getPDO()->query("SELECT * FROM lignesPanier");
-        if ($estVide){
-            Model::getPDO()->query("UPDATE paniers SET date = NULL
-                                    WHERE idPanier = $this->idPanier");
         }
     }
 

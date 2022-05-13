@@ -29,9 +29,6 @@ class ControllerPanier {
         if ($panier->getIdPanier() != 'temp'){
             $panier->suppProduitPanierBDD($idProduit);
         }
-        if (empty($panier)){
-            $panier->updateDatePanierBDD();
-        }
         self::voirPanier();
     }
 }
