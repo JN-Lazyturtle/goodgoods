@@ -20,7 +20,9 @@ if (empty($panier->getLignesPanier())) {
             <td>" . $qte . "</td>
             <td>" . $produit->getPrix() . "</td>
             <td>" . $produit->getPrix() * $qte . "</td>   
-            <th><a href='indexx.php?controller=ControllerPanier&action=majPanierSupp&idProduit=' . $produit->getID().>-</a></th></tr></tr>'";
+            <th><a href='indexx.php?controller=ControllerPanier&action=majPanierAjout&view=panier&idProduit=' . $id . >+</a></th></tr></tr>
+            <th><a href='indexx.php?controller=ControllerPanier&action=majPanierSupp&view=panier&idProduit=' . $id . >-</a></th></tr></tr>'";
+
         }
         echo " </tbody >
         </table > ";

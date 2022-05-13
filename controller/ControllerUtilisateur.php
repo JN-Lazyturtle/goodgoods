@@ -49,7 +49,6 @@ class ControllerUtilisateur {
             require File::build_path(array("view", "view.php"));
         }
     }
-
 }
 
 

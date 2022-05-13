@@ -43,11 +43,13 @@ class ModelPanier {
         - attention à ne pas créer deux panier pour la même personne ! */
    static public function creationPanierVide($mailUtilisateur){
        // creation du panier dans la BDD
-       $sql = "INSERT INTO `paniers` (`mailUtilisateur`)
-                VALUES (:tag_mailUtilisateur)";
+       $date = date("m.d.y");
+       $sql = "INSERT INTO `paniers` (`mailUtilisateur`, `date`)
+                VALUES (:tag_mailUtilisateur, :tag_date)";
        $req_prep = model::getPDO()->prepare($sql);
        $values = array(
-           "tag_mailUtilisateur" => $mailUtilisateur
+           "tag_mailUtilisateur" => $mailUtilisateur,
+           "tag-date" => $date
        );
        $req_prep->execute($values);
    }
@@ -110,8 +112,9 @@ class ModelPanier {
 
     public function suppProduitPanierBDD($idProduit){
         $tab_lignePanier = Model::getPDO()->query("SELECT * FROM lignesPanier
-                                                    WHERE idProduit = '$idProduit'")->fetchAll()[0];
-        $quantite = $tab_lignePanier['quantite'];
+                                                    WHERE idProduit = '$idProduit'")->fetchAll();
+
+        $quantite = $tab_lignePanier[0]['quantite'];
         if ($quantite == 1){
             Model::getPDO()->query("DELETE FROM lignePanier WHERE idProduit = $idProduit");
         } else {
@@ -122,6 +125,9 @@ class ModelPanier {
     }
 
     public function suppProduitPanierObjet($idProduit){
+        if ($this->lignesPanier[$idProduit] == 1){
+
+        }
 
     }
 
