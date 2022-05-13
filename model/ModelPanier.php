@@ -12,7 +12,7 @@ class ModelPanier
 
     public function __construct($idPanier = NULL, $mailUtilisateur = NULL, $date = NULL, $lignesPanier = NULL)
     {
-        if (!is_null($mailUtilisateur) && !is_null($idPanier) && !is_null($date)) {
+        if (!is_null($mailUtilisateur) && !is_null($idPanier)) {
             $this->idPanier = $idPanier;
             $this->mailUtilisateur = $mailUtilisateur;
             $this->date = $date;
