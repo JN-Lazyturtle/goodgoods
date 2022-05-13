@@ -33,7 +33,8 @@ class ControllerUtilisateur {
     }
 
     public static function deconnexion(){
-        $_SESSION['utilisateur'];
+        unset($_SESSION['utilisateur']);
+        header('Location: indexx.php');
     }
 
     /** créer un objet utilisateur et le sauvegarde dans la base de donnée

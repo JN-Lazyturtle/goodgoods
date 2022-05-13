@@ -10,8 +10,11 @@
     </div>
     <div>
         <?php
-        if (isset($_SESSION['utilisateur']))
-        echo "Bonjour ".$_SESSION['utilisateur']->getprenom();
+        if (isset($_SESSION['utilisateur'])) {
+            echo "Bonjour " . $_SESSION['utilisateur']->getprenom();
+            echo "<a href='indexx.php?action=deconnexion&controller=ControllerUtilisateur" .
+                     "' style='margin: 5px'>Deconnexion</a>";
+        }
 
         echo "<a href='indexx.php?action=voirPanier&controller=ControllerPanier' style='margin: 5px'>Mon panier</a>";
 
