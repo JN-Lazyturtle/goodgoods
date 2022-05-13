@@ -2,11 +2,6 @@
 
 echo "<h1>~ Nos good goods ~</h1>";
 
-//if (!empty($tab_p)) {
-//    echo '<pre>';
-//    print_r($tab_p);
-//    echo '</pre>';
-
 echo "<div class='listeProduit'>";
 foreach ($tab_p as $p) {
     $source = "img/".$p->getIdProduit().'.png';

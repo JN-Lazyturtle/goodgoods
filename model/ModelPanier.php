@@ -113,20 +113,4 @@ class ModelPanier {
             $this->lignesPanier[$idProduit] ++ ;
         }
     }
-
-
-//    /** retourne le panier de la BDD si non existant creation et ajout BDD */
-//    static public function chargerPanierUtilisateur($idUtilisateur){
-//
-//    }
-
-
-
-//
-//    public static function delete($immat) {
-//        $sql = "DELETE FROM voiture WHERE immatriculation=:nom_tag";
-//        $req_prep = Model::getPDO()->prepare($sql);
-//        $values = array("nom_tag" => $immat);
-//        $req_prep->execute($values);
-//    }
 }
