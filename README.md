@@ -1,6 +1,8 @@
 # goodgoods
 
 Site commercial de biens en provenance des vilains dans les dessins animés:
+A noter :
+- utilisation de GET dans routeur : toujours passer les arguments DANS L'ORDRE demandé par la fonction !
 
 En cours :
 
@@ -16,8 +18,7 @@ En cours :
     panier : update de la base de donnée à chaque ajout/retrait panier
     update de la date panier quand on fait appel à ajoutPanier() alors que le panier est vide
 
-A noter :
-- utilisation de GET dans routeur : toujours passer les arguments DANS L'ORDRE demandé par la fonction !
+
 
 A faire :
 - cookies ?
