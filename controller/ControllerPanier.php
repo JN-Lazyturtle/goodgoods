@@ -18,6 +18,7 @@ class ControllerPanier {
         if ($panier->getIdPanier() != 'temp'){
             $panier->ajoutProduitPanierBDD($idProduit);
         }
+        header('location: indexx.php');
     }
 
     public static function majPanierSupp($idProduit){
@@ -26,6 +27,9 @@ class ControllerPanier {
         if ($panier->getIdPanier() != 'temp'){
             $panier->suppProduitPanierBDD($idProduit);
         }
+        $view='panier';
+        $pagetitle='Mon panier';
+        require(File::build_path(array("view", "view.php")));
     }
 }
 
