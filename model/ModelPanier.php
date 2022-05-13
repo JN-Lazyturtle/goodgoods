@@ -122,10 +122,8 @@ class ModelPanier
             $this->date = date("m.d.y");
         }
         if (isset($this->lignesPanier[$idProduit])) { // si le produit n'est pas déjà présent dans le panier
-            $this->date="ohohohoho";
             $this->lignesPanier[$idProduit]++;
         } else {
-            $this->date="uhuhuhuh";
             $this->lignesPanier[$idProduit] = 1;
         }
     }
@@ -152,7 +150,7 @@ class ModelPanier
     public function suppProduitPanierObjet($idProduit)
     {
         $indice = $this->lignesPanier[$idProduit];
-        if (isset($indice) && $indice == 1) {
+        if (isset($this->lignesPanier[$idProduit]) && $indice == 1) {
             unset($this->lignesPanier[$idProduit]);
         } else {
             $this->lignesPanier[$idProduit]--;
