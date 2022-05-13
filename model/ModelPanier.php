@@ -87,21 +87,30 @@ class ModelPanier {
         return $this->lignesPanier;
     }
 
-    public function ajoutProduitPanier($idProduit){
+    public function ajoutProduitPanierBDD($idProduit){
         if ($this->date == null){
-            $this->date = date("m.d.y");
-            Model::getPDO()->query("INSERT INTO 'paniers' ('date') VALUES (".$this->getDate().")")->fetchAll();
+            $date = date("m.d.y");
+            Model::getPDO()->query("INSERT INTO 'paniers' ('date') VALUES ($date)")->fetchAll();
         }
-        $tab_lignePanier = Model::getPDO()->query("SELECT * FROM lignesPanier WHERE idProduit = '$idProduit'")->fetchAll()[0];
+        $tab_lignePanier = Model::getPDO()->query("SELECT * FROM lignesPanier WHERE idProduit = '$idProduit' AND idPanier = '$this->idPanier'")->fetchAll()[0];
         if (empty($tab_lignePanier)){ // si le produit n'est pas déjà présent dans le panier
                 Model::getPDO()->query("INSERT INTO `lignesPanier` (`idProduit`, `idPanier`, `quantite`)
-                VALUES ($idProduit, $this->idPanier, 1)")->fetAll();
-                $this->lignesPanier[$idProduit] = 1;
+                VALUES ($idProduit, $this->idPanier, 1)");
         } else {
-            $quantite = Model::getPDO()->query("SELECT quantite FROM lignespanier WHERE idProduit = '$idProduit'")->fetchAll[0]['quantite'];
+            $quantite = Model::getPDO()->query("SELECT quantite FROM lignespanier WHERE idProduit = '$idProduit' AND idPanier = '$this->idPanier'")->fetchAll()[0]['quantite'];
             $quantite ++;
-            Model::getPDO()->query("UPDATE lignesPanier SET quantite = '$quantite' WHERE idProduit = '$idProduit'")->fetchAll;
-            $this->lignesPanier[$idProduit] = $quantite;
+            $req = Model::getPDO()->query("UPDATE lignesPanier SET quantite = '$quantite' WHERE idProduit = '$idProduit' AND idPanier = '$this->idPanier'");
+        }
+    }
+
+    public function ajoutProduitPanierObjet($idProduit){
+        if ($this->date == null){
+            $this->date = date("m.d.y");
+        }
+        if (! isset($this->lignesPanier[$idProduit])){ // si le produit n'est pas déjà présent dans le panier
+            $this->lignesPanier[$idProduit] = 1;
+        } else {
+            $this->lignesPanier[$idProduit] ++ ;
         }
     }
 

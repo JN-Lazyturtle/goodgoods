@@ -12,7 +12,9 @@ class ControllerPanier {
 
     public static function majPanierAjout($idProduit){
         $panier = $_SESSION['panier'];
-        $panier->ajoutProduitPanier($idProduit);
+        $panier->ajoutProduitPanierObjet($idProduit);
+        if ($panier->getIdPanier() != 'temp')
+            $panier->ajoutProduitPanierBDD($idProduit);
     }
 
 //    public static function readAll() {
