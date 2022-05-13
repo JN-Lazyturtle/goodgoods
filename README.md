@@ -25,3 +25,8 @@ A faire :
 - securité des vues (voir TD5)
 - hachage mdp
 - authentification et validation par email
+
+transformer le panier en commande
+mettre la TVA et le prix total du panier
+afficher les commandes (en pdf si possible)
+un site fonctionnel
