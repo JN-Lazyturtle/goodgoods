@@ -10,28 +10,28 @@ class ControllerPanier {
         require(File::build_path(array("view", "view.php")));
     }
 
-    public static function majPanierAjout($view, $idProduit){
+    public static function majPanierAjout($idProduit, $view){
         $panier = $_SESSION['panier'];
         $panier->ajoutProduitPanierObjet($idProduit);
         if ($panier->getIdPanier() != 'temp'){
             $panier->ajoutProduitPanierBDD($idProduit);
         }
-        if ($view == "produits"){
-            ControllerProduit::readAll();
-        } else {
+        if ($view == "panier"){
             self::voirPanier();
+//            header("Location: indexx.php");
+        } else {
+            ControllerProduit::readAll();
         }
     }
 
-    public static function majPanierSupp($view, $idProduit){
+    public static function majPanierSupp($idProduit){
         $panier = $_SESSION['panier'];
-//        $panier->suppProduitPanierObjet($idProduit);
+        $panier->suppProduitPanierObjet($idProduit);
         if ($panier->getIdPanier() != 'temp'){
             $panier->suppProduitPanierBDD($idProduit);
         }
-        $view='panier';
-        $pagetitle='Mon panier';
-        require(File::build_path(array("view", "view.php")));
+        self::voirPanier();
+//        header("Location: indexx.php");
     }
 }
 

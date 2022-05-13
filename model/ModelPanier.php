@@ -1,7 +1,8 @@
 <?php
 require_once(File::build_path(array("model", "Model.php")));
 
-class ModelPanier {
+class ModelPanier
+{
 
     private $idPanier;
     private $mailUtilisateur;
@@ -9,65 +10,19 @@ class ModelPanier {
     private $lignesPanier;
 
 
-    public function __construct($idPanier = NULL, $mailUtilisateur = NULL, $date = NULL, $lignesPanier = NULL){
+    public function __construct($idPanier = NULL, $mailUtilisateur = NULL, $date = NULL, $lignesPanier = NULL)
+    {
         if (!is_null($mailUtilisateur) && !is_null($idPanier) && !is_null($date)) {
             $this->idPanier = $idPanier;
             $this->mailUtilisateur = $mailUtilisateur;
             $this->date = $date;
         }
-        if(is_null($lignesPanier)){$this->lignesPanier = [];}
-        else {$this->lignesPanier = $lignesPanier;}
-    }
-
-    /**  Retourne un objet panier avec les infos de la base de données */
-    static public function getPanierParMail($mailUtilisateur){
-        $sql = "SELECT idPanier, date FROM paniers WHERE mailUtilisateur = :mail";
-        $req_prep = model::getPDO()->prepare($sql);
-        $values = array('mail' => $mailUtilisateur);
-        $req_prep->execute($values); // ici sont stockés l'id panier et la date
-        $res = $req_prep->fetchAll();
-        if (empty($res)){
-            self::creationPanierVide($mailUtilisateur);
-            $sql = "SELECT idPanier, date FROM paniers WHERE mailUtilisateur = :mail";
-            $req_prep = model::getPDO()->prepare($sql);
-            $values = array('mail' => $mailUtilisateur);
-            $req_prep->execute($values); // ici sont stockés l'id panier et la date
-            $res = $req_prep->fetchAll();
+        if (is_null($lignesPanier)) {
+            $this->lignesPanier = [];
+        } else {
+            $this->lignesPanier = $lignesPanier;
         }
-        $res = $res[0];
-        $tab_produits = ModelPanier::getAllProduitsPanier($res['idPanier']);
-        return new ModelPanier($res['idPanier'], $mailUtilisateur, $res['date'], $tab_produits);
     }
-
-    /** - creer un panier vide et l'enregistre dans la base de donnée
-        - attention à ne pas créer deux panier pour la même personne ! */
-   static public function creationPanierVide($mailUtilisateur){
-       // creation du panier dans la BDD
-       $date = date("m.d.y");
-       $sql = "INSERT INTO `paniers` (`mailUtilisateur`, `date`)
-                VALUES (:tag_mailUtilisateur, :tag_date)";
-       $req_prep = model::getPDO()->prepare($sql);
-       $values = array(
-           "tag_mailUtilisateur" => $mailUtilisateur,
-           "tag-date" => $date
-       );
-       $req_prep->execute($values);
-   }
-
-    /** Retourne un tableau des produits présents dans le panier en BDD
-        le tableau est indexé par idProduit avec une quantité associée */
-    static public function getAllProduitsPanier($idPanier){
-        $sql = "SELECT idProduit, quantite FROM lignesPanier WHERE idPanier = :idPanier";
-        $req_prep = Model::getPDO()->prepare($sql);
-        $values = array('idPanier' => $idPanier);
-        $req_prep->execute($values);
-        $res = [];
-        foreach ($req_prep->fetchAll() as $ligne){
-            $res[$ligne['idProduit']] = $ligne['quantite'];
-        }
-        return $res;
-    }
-
 
     public function getIdPanier()
     {
@@ -89,34 +44,97 @@ class ModelPanier {
         return $this->lignesPanier;
     }
 
-    public function ajoutProduitPanierBDD($idProduit){
-        if ($this->date == null){
+    /**  Retourne un objet panier avec les infos de la base de données */
+    static public function getPanierParMail($mailUtilisateur)
+    {
+        $sql = "SELECT idPanier, date FROM paniers WHERE mailUtilisateur = :mail";
+        $req_prep = model::getPDO()->prepare($sql);
+        $values = array('mail' => $mailUtilisateur);
+        $req_prep->execute($values); // ici sont stockés l'id panier et la date
+        $res = $req_prep->fetchAll();
+        if (empty($res)) {
+            self::creationPanierVide($mailUtilisateur);
+            $sql = "SELECT idPanier, date FROM paniers WHERE mailUtilisateur = :mail";
+            $req_prep = model::getPDO()->prepare($sql);
+            $values = array('mail' => $mailUtilisateur);
+            $req_prep->execute($values); // ici sont stockés l'id panier et la date
+            $res = $req_prep->fetchAll();
+        }
+        $res = $res[0];
+        $tab_produits = ModelPanier::getAllProduitsPanier($res['idPanier']);
+        return new ModelPanier($res['idPanier'], $mailUtilisateur, $res['date'], $tab_produits);
+    }
+
+    /** - creer un panier vide et l'enregistre dans la base de donnée
+     * - attention à ne pas créer deux panier pour la même personne ! */
+    static public function creationPanierVide($mailUtilisateur)
+    {
+        // creation du panier dans la BDD
+        $sql = "INSERT INTO `paniers` (`mailUtilisateur`)
+                VALUES (:tag_mailUtilisateur)";
+        $req_prep = model::getPDO()->prepare($sql);
+        $values = array(
+            "tag_mailUtilisateur" => $mailUtilisateur
+        );
+        $req_prep->execute($values);
+    }
+
+    /** Retourne un tableau des produits présents dans le panier en BDD
+     * le tableau est indexé par idProduit avec une quantité associée */
+    static public function getAllProduitsPanier($idPanier)
+    {
+        $sql = "SELECT idProduit, quantite FROM lignesPanier WHERE idPanier = :idPanier";
+        $req_prep = Model::getPDO()->prepare($sql);
+        $values = array('idPanier' => $idPanier);
+        $req_prep->execute($values);
+        $res = [];
+        foreach ($req_prep->fetchAll() as $ligne) {
+            $res[$ligne['idProduit']] = $ligne['quantite'];
+        }
+        return $res;
+    }
+
+    public function ajoutProduitPanierBDD($idProduit)
+    {
+        if ($this->date == null) {
             $date = date("m.d.y");
             Model::getPDO()->query("INSERT INTO 'paniers' ('date') VALUES ($date)")->fetchAll();
         }
         $tab_lignePanier = Model::getPDO()->query("SELECT * FROM lignesPanier 
                                                     WHERE idProduit = '$idProduit' 
                                                     AND idPanier = '$this->idPanier'")->fetchAll();
-        if (empty($tab_lignePanier[0])){ // si le produit n'est pas déjà présent dans le panier
-                Model::getPDO()->query("INSERT INTO `lignesPanier` (`idProduit`, `idPanier`, `quantite`)
+        if (empty($tab_lignePanier[0])) { // si le produit n'est pas déjà présent dans le panier
+            Model::getPDO()->query("INSERT INTO `lignesPanier` (`idProduit`, `idPanier`, `quantite`)
                                         VALUES ($idProduit, $this->idPanier, 1)");
         } else {
             $quantite = Model::getPDO()->query("SELECT quantite FROM lignespanier 
                                                 WHERE idProduit = '$idProduit' 
                                                 AND idPanier = '$this->idPanier'")->fetchAll()[0]['quantite'];
-            $quantite ++;
+            $quantite++;
             $req = Model::getPDO()->query("UPDATE lignesPanier SET quantite = '$quantite' 
                                             WHERE idProduit = '$idProduit' AND idPanier = '$this->idPanier'");
         }
     }
 
-    public function suppProduitPanierBDD($idProduit){
+    public function ajoutProduitPanierObjet($idProduit)
+    {
+        if ($this->date == null) {
+            $this->date = date("m.d.y");
+        }
+        if (!isset($this->lignesPanier[$idProduit])) { // si le produit n'est pas déjà présent dans le panier
+            $this->lignesPanier[$idProduit] = 1;
+        } else {
+            $this->lignesPanier[$idProduit]++;
+        }
+    }
+
+    public function suppProduitPanierBDD($idProduit)
+    {
         $tab_lignePanier = Model::getPDO()->query("SELECT * FROM lignesPanier
                                                     WHERE idProduit = '$idProduit'")->fetchAll();
-
         $quantite = $tab_lignePanier[0]['quantite'];
-        if ($quantite == 1){
-            Model::getPDO()->query("DELETE FROM lignePanier WHERE idProduit = $idProduit");
+        if ($quantite == 1) {
+            Model::getPDO()->query("DELETE FROM lignesPanier WHERE idProduit = $idProduit");
         } else {
             $quantite -= 1;
             Model::getPDO()->query("UPDATE lignesPanier SET quantite = '$quantite'
@@ -124,21 +142,13 @@ class ModelPanier {
         }
     }
 
-    public function suppProduitPanierObjet($idProduit){
-        if ($this->lignesPanier[$idProduit] == 1){
-
-        }
-
-    }
-
-    public function ajoutProduitPanierObjet($idProduit){
-        if ($this->date == null){
-            $this->date = date("m.d.y");
-        }
-        if (! isset($this->lignesPanier[$idProduit])){ // si le produit n'est pas déjà présent dans le panier
-            $this->lignesPanier[$idProduit] = 1;
+    public function suppProduitPanierObjet($idProduit)
+    {
+        $indice = $this->lignesPanier[$idProduit];
+        if (isset($indice) && $indice == 1) {
+            unset($this->lignesPanier[$idProduit]);
         } else {
-            $this->lignesPanier[$idProduit] ++ ;
+            $this->lignesPanier[$idProduit]--;
         }
     }
 }
