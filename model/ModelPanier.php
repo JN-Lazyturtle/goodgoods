@@ -98,7 +98,7 @@ class ModelPanier
     {
         if ($this->date == null) {
             $date = date("m.d.y");
-            Model::getPDO()->query("INSERT INTO 'paniers' ('date') VALUES ($date)")->fetchAll();
+            Model::getPDO()->query("UPDATE paniers SET date = $date where idPanier = $this->idPanier");
         }
         $tab_lignePanier = Model::getPDO()->query("SELECT * FROM lignesPanier 
                                                     WHERE idProduit = '$idProduit' 

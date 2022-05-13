@@ -24,7 +24,6 @@ class ModelProduit
     // méthode d'obtention de tous les produits
     static public function getAllProduits()
     {
-
         $rep = Model::getPDO()->query("SELECT * FROM produits");  //obtenir une réponse illisible à la requête
         $rep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduit');        //rendre lisible la réponse en transformant en classe
         return $rep->fetchAll();
@@ -43,6 +42,17 @@ class ModelProduit
         if (empty($tab_voit))
             return false;
         return $tab_voit[0];
+    }
+
+    public static function getProduitsParCategorie($categorie){
+        $rep = Model::getPDO()->query("SELECT * FROM produits WHERE nomCategorie = '$categorie'");
+        $rep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduit');
+        return $rep->fetchAll();
+    }
+
+    public static function getAllCategories(){
+        $rep = Model::getPDO()->query("SELECT * FROM categories");
+        return $rep->fetchAll();
     }
 
     public function getIdProduit()

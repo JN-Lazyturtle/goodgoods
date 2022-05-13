@@ -34,6 +34,7 @@ class ControllerUtilisateur {
 
     public static function deconnexion(){
         unset($_SESSION['utilisateur']);
+        unset($_SESSION['panier']);
         header('Location: indexx.php');
     }
 
