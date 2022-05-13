@@ -23,8 +23,8 @@ if (empty($panier->getLignesPanier())) {
             <td>" . $qte . "</td>
             <td>" . $produit->getPrix() . "</td>
             <td>" . $prixTotal . "</td>   
-            <th><a href='indexx.php?action=majPanierAjout&controller=ControllerPanier&id= $id &view=panier'>+</a></th></tr></tr>
-            <th><a href='indexx.php?action=majPanierSupp&controller=ControllerPanier&id= $id '>-</a></th></tr></tr>";
+            <th><a href='indexx.php?action=majPanierAjout&controller=ControllerPanier&id=$id&view=panier'>+</a></th></tr></tr>
+            <th><a href='indexx.php?action=majPanierSupp&controller=ControllerPanier&id=$id'>-</a></th></tr></tr>";
 
         }
         echo " </tbody >

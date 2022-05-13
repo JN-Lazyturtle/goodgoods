@@ -121,10 +121,12 @@ class ModelPanier
         if ($this->date == null) {
             $this->date = date("m.d.y");
         }
-        if (!isset($this->lignesPanier[$idProduit])) { // si le produit n'est pas déjà présent dans le panier
-            $this->lignesPanier[$idProduit] = 1;
-        } else {
+        if (isset($this->lignesPanier[$idProduit])) { // si le produit n'est pas déjà présent dans le panier
+            $this->date="ohohohoho";
             $this->lignesPanier[$idProduit]++;
+        } else {
+            $this->date="uhuhuhuh";
+            $this->lignesPanier[$idProduit] = 1;
         }
     }
 
