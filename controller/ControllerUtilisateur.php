@@ -32,6 +32,10 @@ class ControllerUtilisateur {
         }
     }
 
+    public static function deconnexion(){
+        $_SESSION['utilisateur']
+    }
+
     /** créer un objet utilisateur et le sauvegarde dans la base de donnée
     si il manque le mail ou le mdp on renvois sur une page d'erreur*/
     public static function creerCompte($mail, $mdp, $prenom, $nom, $adresse){

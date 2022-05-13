@@ -92,8 +92,8 @@ class ModelPanier {
             $date = date("m.d.y");
             Model::getPDO()->query("INSERT INTO 'paniers' ('date') VALUES ($date)")->fetchAll();
         }
-        $tab_lignePanier = Model::getPDO()->query("SELECT * FROM lignesPanier WHERE idProduit = '$idProduit' AND idPanier = '$this->idPanier'")->fetchAll()[0];
-        if (empty($tab_lignePanier)){ // si le produit n'est pas déjà présent dans le panier
+        $tab_lignePanier = Model::getPDO()->query("SELECT * FROM lignesPanier WHERE idProduit = '$idProduit' AND idPanier = '$this->idPanier'")->fetchAll();
+        if (empty($tab_lignePanier[0])){ // si le produit n'est pas déjà présent dans le panier
                 Model::getPDO()->query("INSERT INTO `lignesPanier` (`idProduit`, `idPanier`, `quantite`)
                 VALUES ($idProduit, $this->idPanier, 1)");
         } else {
