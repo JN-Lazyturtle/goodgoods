@@ -38,10 +38,10 @@ class ModelProduit
         $values = array("idProduit" => $idProduit);
         $req_prep->execute($values);
         $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduit');
-        $tab_voit = $req_prep->fetchAll();
-        if (empty($tab_voit))
+        $tab = $req_prep->fetchAll();
+        if (empty($tab))
             return false;
-        return $tab_voit[0];
+        return $tab[0];
     }
 
     public static function getProduitsParCategorie($categorie){

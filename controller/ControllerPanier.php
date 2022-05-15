@@ -12,10 +12,10 @@ class ControllerPanier {
 
     public static function majPanierAjout($idProduit, $view){
         $panier = $_SESSION['panier'];
-        $panier->ajoutProduitPanierObjet($idProduit);
         if ($panier->getIdPanier() != 'temp'){
             $panier->ajoutProduitPanierBDD($idProduit);
         }
+        $panier->ajoutProduitPanierObjet($idProduit);
         if ($view == "panier"){
             self::voirPanier();
         } else {

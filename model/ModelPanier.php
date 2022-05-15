@@ -97,8 +97,7 @@ class ModelPanier
     public function ajoutProduitPanierBDD($idProduit)
     {
         if ($this->date == null) {
-            $date = date("m.d.y");
-            Model::getPDO()->query("UPDATE paniers SET date = $date where idPanier = $this->idPanier");
+            Model::getPDO()->query("UPDATE paniers SET date = CURRENT_DATE() where idPanier = $this->idPanier");
         }
         $tab_lignePanier = Model::getPDO()->query("SELECT * FROM lignesPanier 
                                                     WHERE idProduit = '$idProduit' 
