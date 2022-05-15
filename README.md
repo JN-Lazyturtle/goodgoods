@@ -25,7 +25,7 @@ A faire :
 - authentification et validation par email
 
 Demandé par le prof:
-- transformer le panier en commande -> à moitié fait, il faut pouvoir transformer un panier en commande maintenant
+- transformer le panier en commande -> la classe ModelCommande est testé et devrait être complète, manque plus que ControllerCommande et les vues readAll et détail
 - mettre la TVA
 - afficher les commandes (en pdf si possible)
 - un site fonctionnel

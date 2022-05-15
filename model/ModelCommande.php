@@ -61,5 +61,24 @@ class ModelCommande
         return $res;
     }
 
+    /** prends en paramètre un objet panier, le transforme en objet commande et l'insère dans la BDD
+        retourne un l'objet commande en question   */
+    Static public function EnregistrerPanierEnCommande($panier){
+        // création de la commande
+        $req_prep = Model::getPDO()->prepare("INSERT INTO commandes (date, mailUtilisateur) VALUES (CURRENT_DATE(), :mail)");
+        $req_prep->execute(array('mail' => $panier->getMailUtilisateur()));
+
+        // récupération de l'id de la commande généré par Mysql
+        $req_id = Model::getPDO()->prepare("SELECT MAX(idCommande) FROM commandes WHERE mailUtilisateur = :mail");
+        $req_id->execute(array('mail' => $panier->getMailUtilisateur()));
+        $idCommande = $req_id->fetchAll()[0][0];
+
+        // insertion des lignesCommandes correspondantes aux lignesPanier
+        Model::getPDO()->query("INSERT INTO lignescommande (idProduit, quantite, idCommande)
+                                SELECT idProduit, quantite, '$idCommande' FROM lignesPanier WHERE idPanier = ".$panier->getidPanier());
+
+        return self::getCommandeParId($idCommande);
+    }
+
 
 }
