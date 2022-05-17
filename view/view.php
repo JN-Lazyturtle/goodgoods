@@ -30,7 +30,6 @@
 </header>
 <body>
 <?php
-var_dump($_SESSION['panier']);
 $filepath = File::build_path(array("view", "$view.php"));
 require $filepath;
 ?>
