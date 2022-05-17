@@ -1,5 +1,6 @@
 <?php
 require_once(File::build_path(array("model", "Model.php")));
+require_once (File::build_path(array("Model", "ModelProduit.php")));
 
 class ModelCommande
 {
@@ -79,6 +80,39 @@ class ModelCommande
 
         return self::getCommandeParId($idCommande);
     }
+
+    public function getIdCommande()
+    {
+        return $this->idCommande;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    public function getLignesCommande()
+    {
+        return $this->lignesCommande;
+    }
+
+    public function getNbArticles(){
+        $somme = 0;
+        foreach ($this->lignesCommande as $quantite)
+            $somme += $quantite;
+        return $somme;
+    }
+
+    public function getPrixTotal(){
+        $total = 0;
+        foreach ($this->lignesCommande as $idProduit => $quantite){
+            $produit = ModelProduit::getProduitParId($idProduit);
+            $total += $produit->getPrix()*$quantite;
+        }
+        return $total;
+    }
+
+
 
 
 }

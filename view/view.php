@@ -14,6 +14,7 @@
             echo "Bonjour " . $_SESSION['utilisateur']->getprenom();
             echo "<a href='indexx.php?action=deconnexion&controller=ControllerUtilisateur" .
                      "' style='margin: 5px'>Deconnexion</a>";
+            echo "<a href='indexx.php?action=readAll&controller=ControllerCommande'> Mes commandes</a>";
         }
 
         echo "<a href='indexx.php?action=voirPanier&controller=ControllerPanier' style='margin: 5px'>Mon panier</a>";

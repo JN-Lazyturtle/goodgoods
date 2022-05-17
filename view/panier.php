@@ -30,6 +30,8 @@ if (empty($panier->getLignesPanier())) {
         }
         echo " </tbody >
         </table > ";
-        echo $prixTotalPanier;
+        echo "<div> prix Total : $prixTotalPanier </div>";
+        if (isset($_SESSION['utilisateur']))
+            echo "<a href='indexx.php?action=panierVersCommande&controller=ControllerCommande'> Transformer en commande</a>";
 }
 

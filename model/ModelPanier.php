@@ -159,4 +159,14 @@ class ModelPanier
         }
     }
 
+    public function viderPanierBDD()
+    {
+        Model::getPDO()->query("DELETE FROM lignesPanier WHERE idPanier = $this->idPanier");
+    }
+
+    public function viderPanierObjet()
+    {
+        $this->lignesPanier = [];
+    }
+
 }
