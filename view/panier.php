@@ -14,7 +14,6 @@ if (empty($panier->getLignesPanier())) {
         </tr>
     </thead>
     <tbody>";
-    echo "<pre>".print_r($panier->getLignesPanier())."</pre>";
         foreach ($panier->getLignesPanier() as $id => $qte) {
             $produit = ModelProduit::getProduitParId($id);
             $prixTotal = $produit->getPrix() * $qte;
