@@ -30,6 +30,7 @@
     <div class="categories">
         <a href='indexx.php?'>Tout</a>
         <?php
+        $tab_categorie = ModelProduit::getAllCategories();
         foreach ($tab_categorie as $categorie) {
             $categorie = $categorie['nomCategorie'];
             echo "<a href='indexx.php?action=readAll&controller=ControllerProduit&action=readAll&categorie=$categorie'> $categorie </a>";

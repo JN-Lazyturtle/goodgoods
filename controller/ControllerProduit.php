@@ -5,7 +5,6 @@ class ControllerProduit {
     public static function readAll($categorie = NULL) {
         if ($categorie == NULL){$tab_p = ModelProduit::getAllProduits();}
         else {$tab_p = ModelProduit::getProduitsParCategorie($categorie);}
-        $tab_categorie = ModelProduit::getAllCategories();
         $view='produits';
         $pagetitle='Nos Good Goods';
         require(File::build_path(array("view", "view.php")));

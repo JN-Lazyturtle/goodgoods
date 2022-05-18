@@ -1,10 +1,10 @@
 <?php
 
-echo "<div class='produits'>"; // div liste produits (à gauche)
+echo "<div class='cadre'>"; // div liste produits (à gauche)
 foreach ($tab_p as $p) {
     $source = "img/".$p->getIdProduit().'.png';
 
-    echo "<div class='cadre'>
+    echo "<div class='produit'>
                     <h2>" . $p->getNom() . "</h2>
                     <img class='gif' style='width:15%' src='" . $source . "'>
                     <p>" . $p->getDescription() . "</p>
