@@ -123,6 +123,37 @@ class ModelUtilisateur{
         return $this->estAdmin;
     }
 
+    /** retourne faux si l'ancien mdp n'est pas juste
+        retourne vrai sinon
+     * actualise le mot de passe et la BDD à condition que le mdp ne soit pas vide
+     */
+    public function setMdpEtBDD($ancienMdp, $nouveauMdp){
+        if ($nouveauMdp != "") {
+            if ($ancienMdp == $this->mdp ) {
+                $req = Model::getPDO()->prepare("UPDATE utilisateurs SET mdp = :mdp WHERE mail = '$this->mail'");
+                $values = array("mdp" => $nouveauMdp);
+                $req->execute($values);
+                $this->mdp = $mdp;
+                return true;
+            }
+            return false;
+        }
+        return true;
+
+    }
+
+    /** change le prenom de l'objet et en BDD a condition que le prenom ne sois pas vide */
+    public function setPrenomEtBDD($prenom)
+    {
+        if ($prenom != "") {
+            $this->prenom = $prenom;
+            $req = Model::getPDO()->prepare("UPDATE utilisateurs SET prenom = :prenom WHERE mail = '$this->mail'");
+            $values = array("prenom" => $prenom);
+            $req->execute($values);
+        }
+    }
+
+
 
 
 

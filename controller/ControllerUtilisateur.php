@@ -84,6 +84,24 @@ class ControllerUtilisateur {
         $pagetitle='Ajouter un utilisateur';
         require(File::build_path(array("view", "view.php")));
     }
-}
+
+    public static function modifierCompte($prenom, $ancienMdp, $nouveauMdp){
+        $utilisateur = $_SESSION['utilisateur'];
+        $utilisateur->setPrenomEtBDD($prenom);
+
+        if (! $utilisateur->setMdpEtBDD($ancienMdp, $nouveauMdp)){
+            $view = 'erreur_changementMdp';
+            $pagetitle = 'Erreur MotDePasse';
+            require File::build_path(array("view", "view.php"));
+        }else header('Location: indexx.php');
+    }
+
+    public static function formModifierCompte(){
+        $view = 'modificationCompte';
+        $pagetitle = 'Modifier mon compte';
+        require File::build_path(array("view", "view.php"));
+    }
+
+    }
 
 

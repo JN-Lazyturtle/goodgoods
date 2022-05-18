@@ -16,6 +16,7 @@
                 echo "<a href='indexx.php?action=home&controller=ControllerUtilisateur'>Page administrateur</a>";
             }
             echo "<a href='indexx.php?action=deconnexion&controller=ControllerUtilisateur'>Deconnexion</a>";
+            echo "<a href='indexx.php?action=formModifierCompte&controller=ControllerUtilisateur'> Modifier mon compte</a>";
             echo "<a href='indexx.php?action=readAll&controller=ControllerCommande'> Mes commandes</a>";
         }
 
