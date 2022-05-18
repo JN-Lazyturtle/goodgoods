@@ -11,7 +11,10 @@
     <div class="session">
         <?php
         if (isset($_SESSION['utilisateur'])) {
-            echo "Bonjour " . $_SESSION['utilisateur']->getprenom();
+            echo "<p>Bonjour ".$_SESSION['utilisateur']->getprenom()."</p>";
+            if ($_SESSION['utilisateur']->getEstAdmin() == 1){
+                echo "<a href='indexx.php?action=home&controller=ControllerUtilisateur'>Page administrateur</a>";
+            }
             echo "<a href='indexx.php?action=deconnexion&controller=ControllerUtilisateur'>Deconnexion</a>";
             echo "<a href='indexx.php?action=readAll&controller=ControllerCommande'> Mes commandes</a>";
         }

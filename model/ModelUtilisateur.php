@@ -8,6 +8,7 @@ class ModelUtilisateur{
     private $nom;
     private $prenom;
     private $adresse;
+    private $estAdmin;
 
 
     public function __construct($mail=NULL, $mdp=NULL, $nom=NULL, $prenom=NULL, $adresse=NULL){
@@ -17,6 +18,7 @@ class ModelUtilisateur{
             $this->nom = $nom;
             $this->prenom = $prenom;
             $this->adresse = $adresse;
+            $this->estAdmin = 0;
         }
     }
 
@@ -36,13 +38,34 @@ class ModelUtilisateur{
     /** créer un nouvel utilisateur avec un panier vide*/
     public function save(){
         try {
-            $sql = "INSERT INTO `utilisateurs` (`mail`, `mdp`, `nom`, `prenom`, `adresse`) VALUES (:mail, :mdp, :nom, :prenom, :adresse);";
+            $sql = "INSERT INTO `utilisateurs` (`mail`, `mdp`, `nom`, `prenom`, `adresse`) 
+                    VALUES (:mail, :mdp, :nom, :prenom, :adresse);";
+            $req_prep = Model::getPDO()->prepare($sql);
+            $values = array("mail" => $this->mail,
+                "mdp" => $this->mdp,
+                "nom" => $this->nom,
+                "prenom" => $this->prenom,
+                "adresse" => $this->adresse
+            );
+            $req_prep->execute($values);
+        }catch (PDOException $e){
+            echo '<h2>Une erreur est survenue lors de la création de votre compte <a href="indexx.php"> retour a la page d\'accueil </a></h2>';
+            die();
+        }
+    }
+
+    /** créer un nouvel utilisateur ou un administrateur avec un panier vide*/
+    public function adminSave(){
+        try {
+            $sql = "INSERT INTO `utilisateurs` (`mail`, `mdp`, `nom`, `prenom`, `adresse`, `estAdmin`) 
+                    VALUES (:mail, :mdp, :nom, :prenom, :adresse, :estAdmin);";
             $req_prep = Model::getPDO()->prepare($sql);
             $values = array("mail" => $this->mail,
                 "mdp" => $this->mdp,
                 "nom" => $this->nom,
                 "prenom" => $this->prenom,
                 "adresse" => $this->adresse,
+                "estAdmin" => $this->estAdmin
             );
             $req_prep->execute($values);
         }catch (PDOException $e){
@@ -94,6 +117,10 @@ class ModelUtilisateur{
     public function getAdresse()
     {
         return $this->adresse;
+    }
+
+    public function getEstAdmin(){
+        return $this->estAdmin;
     }
 
 

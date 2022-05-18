@@ -28,14 +28,18 @@ class ControllerUtilisateur {
         } else {
             $_SESSION['utilisateur'] = $utilisateur;
             $_SESSION['panier'] = ModelPanier::getPanierParMail($mail);
-            header('Location: indexx.php');
+            if ($utilisateur->getEstAdmin() == 0) {
+                ControllerProduit::readAll();
+            } else {
+                ControllerUtilisateur::home();
+            }
         }
     }
 
     public static function deconnexion(){
         unset($_SESSION['utilisateur']);
         unset($_SESSION['panier']);
-        header('Location: indexx.php');
+        ControllerProduit::readAll();
     }
 
     /** créer un objet utilisateur et le sauvegarde dans la base de donnée
@@ -50,6 +54,35 @@ class ControllerUtilisateur {
             $pagetitle = 'Erreur connexion';
             require File::build_path(array("view", "view.php"));
         }
+    }
+
+//    FONCTION ADMIN
+
+    /** créer un objet utilisateur et le sauvegarde dans la base de donnée
+    si il manque le mail ou le mdp on renvois sur une page d'erreur*/
+    public static function adminCreerCompte($mail, $mdp, $prenom, $nom, $adresse, $estAdmin){
+        if ($mail!='' && ModelUtilisateur::mailEstDisponible($mail) && $mdp!='' && !is_null($mdp)) {
+            $utilisateur = new ModelUtilisateur($mail, $mdp, $nom, $prenom, $adresse, $estAdmin);
+            $utilisateur->save();
+        }else {
+            $view = 'admin/ajouterUtilisateur';
+            $pagetitle = 'Ajout utilisateur';
+            echo "Erreur lors de l'ajout de l'utilisateur.";
+            require File::build_path(array("view", "view.php"));
+        }
+    }
+
+    public static function home(){
+        $view = 'admin/home';
+        $pagetitle = 'BackOffice';
+        require(File::build_path(array("view", "view.php")));
+    }
+
+
+    public static function adminFormCreationCompte(){
+        $view='admin/ajouterUtilisateur';
+        $pagetitle='Ajouter un utilisateur';
+        require(File::build_path(array("view", "view.php")));
     }
 }
 
