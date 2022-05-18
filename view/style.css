@@ -1,3 +1,5 @@
+
+/* ENTETE*/
 header {
     display: flex;
     flex-direction: column;
@@ -38,6 +40,7 @@ body {
     flex-direction: column;
 }
 
+/* PRODUITS */
 .cadre{
     display: flex;
     flex-wrap: wrap;
@@ -51,6 +54,21 @@ body {
     flex-basis: 50%;
 }
 
+/* PANIER */
+
+.tabPanier{
+    display: flex;
+    justify-content: space-around;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.produitPanier{
+    width: 50%;
+}
+
+
+/* FOOTER */
 footer {
     background-color: cadetblue;
     border: 1px solid black;
