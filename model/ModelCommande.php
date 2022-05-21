@@ -1,6 +1,6 @@
 <?php
 require_once(File::build_path(array("model", "Model.php")));
-require_once (File::build_path(array("Model", "ModelProduit.php")));
+require_once (File::build_path(array("model", "ModelProduit.php")));
 
 class ModelCommande
 {
